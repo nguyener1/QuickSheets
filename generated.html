@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="uft-8">
+        <link rel="stylesheet" href="finalimage.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="resources/js/script.js"></script>
+
+        <style>
+            @page { size: auto;  margin: 0mm; }
+        </style>
+        <script>
+            
+            var Week1 = [ 
+                ['mon-date-1', 'mon-start-1', 'mon-end-1'],
+                ['tue-date-1', 'tue-start-1', 'tue-end-1'],
+                ['wed-date-1', 'wed-start-1', 'wed-end-1'],
+                ['thu-date-1', 'thu-start-1', 'thu-end-1'],
+                ['fri-date-1', 'fri-start-1', 'fri-end-1'],
+                ['sat-date-1', 'sat-start-1', 'sat-end-1'],
+                ['sun-date-1', 'sun-start-1', 'sun-end-1']
+                           ];
+            
+            var Week2 = [ 
+                ['mon-date-2', 'mon-start-2', 'mon-end-2'],
+                ['tue-date-2', 'tue-start-2', 'tue-end-2'],
+                ['wed-date-2', 'wed-start-2', 'wed-end-2'],
+                ['thu-date-2', 'thu-start-2', 'thu-end-2'],
+                ['fri-date-2', 'fri-start-2', 'fri-end-2'],
+                ['sat-date-2', 'sat-start-2', 'sat-end-2'],
+                ['sun-date-2', 'sun-start-2', 'sun-end-2']
+                           ];
+            
+            var startTimes = [
+                    'mon-start-1',
+                    'tue-start-1',
+                    'wed-start-1',
+                    'thu-start-1',
+                    'fri-start-1',
+                    'sat-start-1',
+                    'sun-start-1',
+                    'mon-start-2',
+                    'tue-start-2',
+                    'wed-start-2',
+                    'thu-start-2',
+                    'fri-start-2',
+                    'sat-start-2',
+                    'sun-start-2'
+                    ];
+            
+            var endTimes = [
+                    'mon-end-1',
+                    'tue-end-1',
+                    'wed-end-1',
+                    'thu-end-1',
+                    'fri-end-1',
+                    'sat-end-1',
+                    'sun-end-1',
+                    'mon-end-2',
+                    'tue-end-2',
+                    'wed-end-2',
+                    'thu-end-2',
+                    'fri-end-2',
+                    'sat-end-2',
+                    'sun-end-2'
+                    ];
+            
+            function fillDates(){
+                var startDate = new Date(parseInt(localStorage.getItem('start-day'))),
+                    currentDate = new Date(startDate.getTime());
+                
+                for (var i = 0; i < 7; i++) {
+                    changeData( i, 0, getDatePart(currentDate), 'week-1' );
+                    currentDate.setHours(+24);
+                }
+                
+                for (var i = 0; i < 7; i++) {
+                    changeData( i, 0, getDatePart(currentDate), 'week-2' );
+                    currentDate.setHours(+24);
+                }
+            }
+            
+            function getDatePart(date){
+                
+                var mm = date.getMonth() + 1,
+                    dd = date.getDate();
+                
+                return mm + '/' + dd;
+            }
+            
+            function fillHours( weekNum, weekId ){
+                
+                for (var i = 0; i < weekNum.length; i++){
+            
+                    //retrieve values from localstorace by key and set it to element with same id
+                    var start = localStorage.getItem(weekNum[i][1]),
+                        end = localStorage.getItem(weekNum[i][2]),
+                        elapsedTime = '',
+                        timeIn, timeOut;
+                    
+                    console.log(date);
+                    console.log('start: ' + start + ' |End: ' + end);
+                    if ( start != false) { //change start time  
+                        timeIn = convertTo12Hour(start);
+                        changeData( i, 1, timeIn, weekId );
+                    } 
+                    if ( end != false) {   //change end time
+                        timeOut = convertTo12Hour(end);
+                        changeData( i, 2, timeOut, weekId );
+                    }
+                    if ( start != false && end != false ){ //change total hours
+                        elapsedTime = getElapsedTime( start, end );
+                        changeData( i, 3, elapsedTime, weekId );
+                    }
+                }
+            }
+            
+            function fillWeek( weekNum, weekId ){
+                
+                for (var i = 0; i < weekNum.length; i++){
+            
+                    //retrieve values from localstorace by key and set it to element with same id
+                    var 
+                        start = localStorage.getItem(weekNum[i][1]),
+                        end = localStorage.getItem(weekNum[i][2]),
+                        elapsedTime = '',
+                        timeIn, timeOut,
+                        date = localStorage.getItem(weekNum[i][0]);
+                    
+                    console.log(date);
+                    console.log('start: ' + start + ' |End: ' + end);
+//                    if ( date != false){   //change date
+//                        changeData( i, 0, date, weekId );
+//                    }
+                    if ( start != false) { //change start time  
+                        timeIn = convertTo12Hour(start);
+                        changeData( i, 1, timeIn, weekId );
+                    } 
+                    if ( end != false) {   //change end time
+                        timeOut = convertTo12Hour(end);
+                        changeData( i, 2, timeOut, weekId );
+                    }
+                    if ( start != false && end != false ){ //change total hours
+                        elapsedTime = getElapsedTime( start, end );
+                        changeData( i, 3, elapsedTime, weekId );
+                    }
+                }
+            }
+            
+            
+            
+            //may need to add a check so that end time is always after start time
+            //returns HH:MM
+            function getElapsedTime( start, end ){
+                
+                //change to int then subtract
+                var startHH,
+                startHH         = start.substring(0, 2),
+                endHH           = end.substring(0, 2),
+                startMM         = start.substring(3, 5),
+                endMM           = end.substring(3, 5),
+                startTimeInMins = ( parseInt(startHH) * 60 ) + parseInt(startMM),
+                endTimeInMins   = ( parseInt(endHH) * 60 ) + parseInt(endMM),
+                elapsedTime     = endTimeInMins - startTimeInMins;
+                
+                return minToHHMM( elapsedTime );
+            }
+            
+            function minToHHMM( minutes ){
+                
+                if ( minutes % 60 == 0) {
+                    return ( minutes / 60 ).toString(10) + ':00'; 
+                } else if (minutes % 60 < 10) {
+                    return Math.floor( minutes / 60 ).toString(10) + ':0' + ( minutes % 60 ).toString(10);
+                } else {
+                    return Math.floor( minutes / 60 ).toString(10) + ':' + ( minutes % 60 ).toString(10);
+                }
+            }
+            
+            function fillBiweeklyTotal(){
+                
+                var totalHoursList, sumOfMinutes, hhmm;
+                
+                //get all total hours as a string
+                totalHoursList = getAllTotalHours();
+                sumOfMinutes = sumOfHoursAsMin(totalHoursList);
+                hhmm = minToHHMM(sumOfMinutes);
+                changeBiWeeklyTotal(hhmm.toString(10));
+                
+            }
+            
+            function sumOfHoursAsMin( list ){
+                
+                var sum = 0;
+                
+                for (var i = 0; i < list.length; i++){
+                    
+                    var hourMin;
+                    
+                    time = list[i];
+                    
+                    hourMin = parseTime(time);
+                    sum += ( parseInt( hourMin[0] ) * 60 ) + parseInt(hourMin[1]);
+                    
+                }
+                
+                return sum;
+            }
+            
+//            function toDateTimeObject( time ){
+//                
+//                //time is h:mm AM or hh:mm AM
+//                
+//                var d = new Date();
+//                
+//                getHourSide(time); 
+//                getMinSide(time);
+//                
+//                
+//                
+//            }
+//            
+//            function parseHH( time ){
+//                
+//            }
+//            
+//            function parseMM( time ){
+//                
+//            }
+//            
+//            function get 
+            function parseTime( time ){
+                var hh = '', mm = '', i = 0;
+                
+                while (time[i] != ':'){
+                    hh += time.charAt(i);
+                    i++;
+                }
+                
+                i++;
+                
+                while (i <= time.length){
+                    mm += time.charAt(i);
+                    i++;
+                }
+                
+                return [hh,mm];
+            }
+            
+            function getAllTotalHours(){
+                
+                //table body 1 and table body 2 will have the same dimensions
+                var tableBody1 = document.getElementById('week-1');
+                var tableBody2 = document.getElementById('week-2');
+                var totalHoursList = [];
+                
+                for (var i = 0; i < tableBody1.rows.length; i++){
+                    
+                    if ( tableBody1.rows[i].cells[3].innerHTML != '-' ){
+                        totalHoursList.push(tableBody1.rows[i].cells[3].innerHTML);
+                    }
+                    if ( tableBody2.rows[i].cells[3].innerHTML != '-' ){
+                        totalHoursList.push(tableBody2.rows[i].cells[3].innerHTML);
+                    }
+                }
+                
+                return totalHoursList;
+            }
+            
+            function convertTo12Hour( time ){
+                
+                var PM, hh, hour;
+                PM = true;
+                hh = time.charAt(0) + time.charAt(1);
+                hour = parseInt(hh);
+                
+                if (hour == 24 || hour == 0) {
+                    hour = 12;
+                    PM = false;
+                } else if (hour > 12) {
+                    hour = hour % 12;
+                } else if (hour < 12) {
+                    PM = false;
+                }
+                
+                time = hour.toString(10) + ':' + time.substring(3,5);
+                
+                if (PM) {
+                    time += ' PM';
+                } else {
+                    time += ' AM';
+                }
+    
+                return time;
+            }
+            
+            function changeData( row, col, data, weekId ){
+                var tableBody = document.getElementById(weekId);
+                tableBody.rows[row].cells[col].innerHTML = data;
+            }
+            
+            function changeBiWeeklyTotal( total ){
+                var spanBody = document.getElementById('biweekly-total');
+                spanBody.innerHTML = total;
+            }
+            
+            function getSignature(){
+                return localStorage['canvas'];    
+            }
+            
+            function fillCanvas(){
+                
+                var canvasSignature = getSignature();
+                
+                try {
+                    if (canvasSignature == null) {throw 'no signature given';}
+                    deserialize(canvasSignature, document.getElementById('signature'));
+                }
+                catch (e) {
+                    console.error(e);
+                }
+            }
+            
+            function deserialize(data, imgTag) {
+                var img = imgTag;
+                img.src = data;
+            
+            }
+            
+            function fillName(){
+                
+                var name = getName();
+                
+                try {
+                    
+                    if (name == null || name == '') {throw 'no name given';}
+                    $('#name').html(name);
+                    
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            
+            function getName(){
+                return localStorage['name'];
+            }
+            
+            function stringifyDate(date){
+            
+                var month    = date.getMonth() + 1,
+                    day      = date.getDate(),
+                    year     = date.getFullYear();
+
+                return month + '/' + day + '/' + year;
+
+            }
+            
+            function fillInfo(){
+                
+                var startDate = new Date(parseInt(localStorage.getItem('start-day'))),
+                    endDate = new Date(parseInt(localStorage.getItem('end-day')));
+                    
+                $('#from_date').text( stringifyDate(startDate) );
+                $('#to_date').text( stringifyDate(endDate) );
+                
+                fillDates();
+                fillWeek( Week1, 'week-1' );
+                fillWeek( Week2, 'week-2' );
+                fillBiweeklyTotal();
+                
+            }
+            
+            window.onload = function () {
+                
+                fillName();
+                fillInfo();
+                fillCanvas();
+
+            }
+            
+        </script>
+        
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            
+            <img src="resources/images/TimeSheetTemplate.jpg" alt="image of timesheet">
+            <h2><span id="name" class="name"><span></h2>
+            <span id="from_date" class="date"></span>
+            <span id="to_date" class="date2"></span>
+            
+            <div class="table-1">
+                
+                <table id="week-1" style="width:100%; height:100%; table-layout:fixed; border-collapse:collapse;">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <tr>
+                        <td id="mon-date-1"></td>
+                        <td id="mon-start-1">-</td>
+                        <td id="mon-end-1">-</td>
+                        <td id="mon-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="tue-date-1">-</td>
+                        <td id="tue-start-1">-</td>
+                        <td id="tue-end-1">-</td>
+                        <td id="tue-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="wed-date-1">-</td>
+                        <td id="wed-start-1">-</td>
+                        <td id="wed-end-1">-</td>
+                        <td id="wed-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="thu-date-1">-</td>
+                        <td id="thu-start-1">-</td>
+                        <td id="thu-end-1">-</td>
+                        <td id="thu-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="fri-date-1">-</td>
+                        <td id="fri-start-1">-</td>
+                        <td id="fri-end-1">-</td>
+                        <td id="fri-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="sat-date-1">-</td>
+                        <td id="sat-start-1">-</td>
+                        <td id="sat-end-1">-</td>
+                        <td id="sat-total-hrs-1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="sun-date-1">-</td>
+                        <td id="sun-start-1">-</td>
+                        <td id="sun-end-1">-</td>
+                        <td id="sun-total-hrs-1">-</td>
+                    </tr>
+                </table>
+                
+            </div>
+            
+            <div class="table-2">
+                
+                <table id="week-2" style="width:100%; height:100%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <tr>
+                        <td id="mon-date-2">-</td>
+                        <td id="mon-start-2">-</td>
+                        <td id="mon-end-2">-</td>
+                        <td id="mon-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="tue-date-2">-</td>
+                        <td id="tue-start-2">-</td>
+                        <td id="tue-end-2">-</td>
+                        <td id="tue-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="wed-date-2">-</td>
+                        <td id="wed-start-2">-</td>
+                        <td id="wed-end-2">-</td>
+                        <td id="wed-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="thu-date-2">-</td>
+                        <td id="thu-start-2">-</td>
+                        <td id="thu-end-2">-</td>
+                        <td id="thu-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="fri-date-2">-</td>
+                        <td id="fri-start-2">-</td>
+                        <td id="fri-end-2">-</td>
+                        <td id="fri-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="sat-date-2">-</td>
+                        <td id="sat-start-2">-</td>
+                        <td id="sat-end-2">-</td>
+                        <td id="sat-total-hrs-2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="sun-date-2">-</td>
+                        <td id="sun-start-2">-</td>
+                        <td id="sun-end-2">-</td>
+                        <td id="sun-total-hrs-2">-</td>
+                    </tr>
+                </table>
+                
+            </div>
+            
+            <div class="sum">
+                <span id="biweekly-total">0</span>
+            </div>
+            <!--
+            <div class="container-signature">
+                <canvas id="canvas" class="signature-css" width="230" height="90">
+                </canvas>
+            </div>
+-->
+            <div class="container-signature">
+                <img id="signature" class="signature-css">
+            </div>
+        </div>
+        
+    </body>
+</html>

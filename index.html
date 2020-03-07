@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>TimeSheet Maker</title>
+        <link rel="stylesheet" href="input.css">
+        <link rel="stylesheet" href="vendor/css/grid.css">
+        <link rel="stylesheet" href="slider_v1.2.css">
+        <link rel="stylesheet" href="popup-modal.css">
+        <script src="resources/js/script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+  
+            var ids = [ 'mon-date-1', 'mon-start-1', 'mon-end-1',
+                        'tue-date-1', 'tue-start-1', 'tue-end-1',
+                        'wed-date-1', 'wed-start-1', 'wed-end-1',
+                        'thu-date-1', 'thu-start-1', 'thu-end-1',
+                        'fri-date-1', 'fri-start-1', 'fri-end-1',
+                        'sat-date-1', 'sat-start-1', 'sat-end-1',
+                        'sun-date-1', 'sun-start-1', 'sun-end-1',
+                        'mon-date-2', 'mon-start-2', 'mon-end-2',
+                        'tue-date-2', 'tue-start-2', 'tue-end-2',
+                        'wed-date-2', 'wed-start-2', 'wed-end-2',
+                        'thu-date-2', 'thu-start-2', 'thu-end-2',
+                        'fri-date-2', 'fri-start-2', 'fri-end-2',
+                        'sat-date-2', 'sat-start-2', 'sat-end-2',
+                        'sun-date-2', 'sun-start-2', 'sun-end-2'
+                      ];
+            
+            var date_ids =  [ 
+                            'mon-date-1',
+                            'tue-date-1',
+                            'wed-date-1',
+                            'thu-date-1',
+                            'fri-date-1',
+                            'sat-date-1',
+                            'sun-date-1',
+                            'mon-date-2',
+                            'tue-date-2',
+                            'wed-date-2',
+                            'thu-date-2',
+                            'fri-date-2',
+                            'sat-date-2',
+                            'sun-date-2'
+                            ];
+
+            var start_ids = [
+                            'mon-start-1',
+                            'tue-start-1',
+                            'wed-start-1',
+                            'thu-start-1',
+                            'fri-start-1',
+                            'sat-start-1',
+                            'sun-start-1',
+                            'mon-start-2',
+                            'tue-start-2',
+                            'wed-start-2',
+                            'thu-start-2',
+                            'fri-start-2',
+                            'sat-start-2',
+                            'sun-start-2'
+                            ];
+            
+            var end_ids =   [
+                            'mon-end-1',
+                            'tue-end-1',
+                            'wed-end-1',
+                            'thu-end-1',
+                            'fri-end-1',
+                            'sat-end-1',
+                            'sun-end-1',
+                            'mon-end-2',
+                            'tue-end-2',
+                            'wed-end-2',
+                            'thu-end-2',
+                            'fri-end-2',
+                            'sat-end-2',
+                            'sun-end-2'
+                            ];
+            
+            
+            function packageData() {
+                
+                localStorage.clear();
+                saveName();
+                saveElements();
+                saveCanvas();
+                
+            }
+            
+            function serialize(canvas) {
+                return canvas.toDataURL();
+            }
+            
+            function saveCanvas() {
+                //localStorage["canvas"] = serialize(document.getElementById('canvas'));
+                var signature = serialize(document.getElementById('canvas'));
+                localStorage['canvas'] = signature;
+            }
+            
+            function saveElements() {
+                
+                //set start and end day
+                localStorage.setItem('start-day', currentMon.getTime() ),
+                localStorage.setItem('end-day', currentSun.getTime() );
+                
+                //get start
+                
+                start_ids.forEach(function (e){ 
+                    
+                    var time = getTime('#' + e);
+                    var AM   = isAM('#' + e);
+                    time = normalizeTime(time, !AM);
+                    localStorage.setItem(e, time);
+                                              
+                    });
+                
+                end_ids.forEach(function(e){
+                    
+                    var time = getTime('#' + e);
+                    var AM   = isAM('#' + e);
+                    time = normalizeTime(time, !AM);
+                    localStorage.setItem(e, time);
+                    
+                    });
+            }
+            
+            function saveName() {              
+                localStorage['name'] = $('#name').val();
+            }
+            
+            function isAM(e) {
+                var control = $(e);
+                return control.find('input[type=checkbox]').is(':checked');
+            }
+            
+            function getTime(e){
+                var control = $(e);
+                return control.find('input[type=text]').val();
+            }
+            
+            function getTimeInput(e) {
+                
+                var control = $(e);
+                const AM = 'AM', PM = 'PM';
+                var time, 
+                    timeString,  
+                    isAM;
+                
+                time = control.find('input[type=text]').val();
+                isAM = control.find('input[type=checkbox]').is(':checked');
+                
+                if (time == ''){
+                    return '';
+                }
+                
+                if (isAM){
+                    timeString = time + ' ' + AM;
+                } else {
+                    timeString = time + ' ' + PM;
+                }
+                
+                return timeString;
+            }
+   
+    </script>
+    
+    <script>
+
+        var startMon, endSun, currentMon, currentSun;
+        
+        $(document).ready(function() {
+            initWeekRange();
+            fillWeekHeader( startMon, endSun );
+            currentMon = new Date( startMon.getTime() );
+            currentSun = new Date( endSun.getTime() );
+            autofillDate( currentMon, currentSun );
+        });
+         
+        function refreshCard(left){
+            switchWeeks( left, currentMon, currentSun );
+            autofillDate( currentMon, currentSun );
+        }
+        
+        function initWeekRange(){
+            endSun = getSunday();
+            startMon = getSunday();
+            startMon.setHours(-24 * 13);
+        }
+        
+        function fillWeekHeader(Mon, Sun) {
+            
+            var mondayDate = stringifyDate(Mon),
+                sundayDate = stringifyDate(Sun);
+            
+             $('#week').text(mondayDate + ' - ' + sundayDate);
+        }
+        
+        function stringifyDate(date){
+            
+            var month    = date.getMonth() + 1,
+                day      = date.getDate(),
+                year     = date.getFullYear();
+            
+            return month + '/' + day + '/' + year;
+        }
+        
+        function getSunday(){
+            
+            var date = new Date();
+            var day = date.getDay();
+            if ( day != 0 ){
+                date.setHours(24 * (7 - day));
+            }
+            return date;
+        }
+            
+        /*Button scripts*/
+        
+        function switchWeeks(left, monday, sunday){
+            
+            var newMonday, newSunday;
+            
+            if (left) {
+                newMonday = goBackOneWeek(monday);
+                newSunday = goBackOneWeek(sunday);  
+            }
+            else {
+                newMonday = goForwardOneWeek(monday);
+                newSunday = goForwardOneWeek(sunday);
+            }
+            
+            $('#week').text(stringifyDate(newMonday) + ' - ' + stringifyDate(newSunday));
+            currentMon = newMonday;
+            currentSun = newSunday;
+        }
+        
+        function goBackOneWeek(date){
+            
+            var newDate = new Date(date.getTime());
+            newDate.setHours(-24 * 7);
+            return newDate;
+            
+        }
+        
+        function goForwardOneWeek(date){
+            
+            var newDate = new Date(date.getTime());
+            newDate.setHours(+24 * 7);
+            return newDate;
+            
+        }
+        
+        function autofillDate(startDate, endDate){
+                
+            var dates = getListOfDates(startDate, endDate);
+                
+            try {
+                
+                if (dates.length != date_ids.length) { throw dates.length; }
+
+                for (var i = 0; i < date_ids.length; i++) {
+                    
+                    var dd = dates[i].getDate(),
+                        mm = dates[i].getMonth() + 1,
+                        yyyy = dates[i].getFullYear();
+                    
+                    var stringDate = (mm + '/' + dd);
+                    $('#' + date_ids[i]).text(stringDate);
+                }
+                
+            } catch (e) {
+                console.log('Incorrect number of dates. There are ' + e + ' dates');
+            }
+        }
+        
+        
+        
+        function getListOfDates(startDate, endDate) {
+            
+            var list = [startDate];
+            var endDay = endDate.getDate();
+            var endMonth = endDate.getMonth();
+            var endYear = endDate.getFullYear();
+            var current = list[0];
+            var nextDate;
+            
+            while ( current.getDate()       != endDay    ||
+                    current.getMonth()      != endMonth  ||
+                    current.getFullYear()   != endYear    
+                  ) 
+            {
+                nextDate = new Date(current.getTime());
+                nextDate.setDate(nextDate.getDate() + 1);
+                list.push(nextDate);
+                current = list[list.length - 1];
+            }
+                     
+            return list;
+        }
+        
+        function onBlurEvent(e) {
+            
+            var el = $(e);
+            var str = el.val();
+            var newStr = '';
+            
+            if( str == '' ){
+                el.removeClass("red-border");
+                return;
+            }
+            
+            if(isTime(str) == false){
+                el.addClass("red-border");
+                return;
+            }
+            
+            if(el.hasClass("red-border")){
+                el.removeClass("red-border");
+            }
+            
+            newStr = autoCompleteTime(str);
+            
+            $(e).val(newStr);
+        }
+        
+        //changes time into "HH:MM" 24 hour time 
+        function normalizeTime( time, PM ) {
+            
+            //get the time
+            var hh, mm, strTime;
+            
+            if (time == null || time == ''){
+                return '';    
+            }
+            
+            hh = getHourSide(time);
+            mm = getMinSide(time);
+            
+            if (PM){
+                 hh = (parseInt(hh) + 12).toString();
+            }
+            
+            if (hh.length == 1){
+                hh = '0' + hh;
+            }
+            
+            return hh + ':' + mm;
+        }
+        
+        /* modal scripts */
+        
+        function modalClickEvents(e) {
+            if (e == 'open') {
+                openModal();
+                enterNameSetup();
+            }
+            else if (e == 'close') {
+                closeModal();
+            }
+            else if (e == 'back'){
+                goBack();
+            }
+            else if (e == 'clear') {
+                clearInputs();
+            }
+            else if (e == 'continue') {
+                continuePressed();
+            }
+        };
+        
+        function openModal(){
+            $('.popup-modal').css('display', 'flex');
+        }
+        function closeModal(){
+            $('.popup-modal').css('display', 'none');
+        }
+        function goBack(){
+            var header = $('#header-name').text();
+            
+            if (header == 'Enter Your Name'){
+                closeModal();
+            }
+            if (header == 'Sign'){
+                enterNameSetup();
+            }
+        }
+        function continuePressed(){
+            var text = $('#header-name').text()
+            if (text == 'Enter Your Name') {
+                enterSignatureSetup()
+            }
+            if (text == 'Sign') {
+                packageData();
+                window.location.href = "generated.html"
+            }
+        }
+        
+        function clearInputs() {
+            var header = $('#header-name').text()
+            
+            if (header == 'Enter Your Name'){
+                $('#name').val('')
+            }
+            if (header == 'Sign'){
+                clearCanvas();
+            }
+        }
+        function clearCanvas() {
+            var $canvas = $('#canvas');
+            var ctx = $canvas[0].getContext('2d');
+            c_width = $canvas.width();
+            c_height = $canvas.height();
+            ctx.clearRect(0, 0, c_width, c_height);
+        };
+        
+        //displays input for name
+        function enterNameSetup() {
+            $('#header-name').text('Enter Your Name');
+            $('.modal-content').find('#signature').css('display', 'none');
+            $('.popup-modal').find('#nameInput').css('display', 'block');
+            
+        }
+        
+        //displays canvas for signing
+        function enterSignatureSetup(){
+            
+            $('#header-name').text('Sign');
+            $('.popup-modal').find('#nameInput').css('display', 'none');
+            $('.modal-content').find('#signature').css('display', 'block');
+            
+        }
+    </script>    
+    </head>
+    
+    <body>
+    <div>
+        <nav>
+            <img src='resources/images/Logo.jpeg' alt="logo">
+        </nav>
+        <!--<section>
+            <div class="row section-step-1">
+                
+                <h1>Step 1</h1>
+                <h2>Tell us your name</h2>
+                
+                <div>
+                    <input id="name" type="text" class="name" placeholder="Your name">   
+                </div>
+                
+            </div>
+            
+        </section>
+        <section>-->
+        
+        <div class="dim">
+            <div class="container">
+            <div class="row section-step-1">
+                
+                <!--<h1>Step 2</h1>
+                <h2>Log your hours</h2>-->
+                
+                <div class="date-container">
+                    <div class="row">
+                        <div class="col span-1-of-5 switch-item" id="left-button">
+                            <button class="switch-icon switch-button left" type="button" id="go-back">&lt</button>
+                            <script>
+                            $('#go-back').click(function(){
+                               refreshCard(true);
+                            });
+                            </script>
+                        </div>
+                        <div class="col span-3-of-5 switch-item">
+                            
+                            <span id="week"></span>
+                            
+                        </div>
+                        <div class="col span-1-of-5 switch-item" id="right-button">
+                            <button class="switch-icon switch-button right" type="button" id="go-forward">&gt</button>
+                            <script>
+                            $('#go-forward').click(function(){
+                               refreshCard(false);
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hour-log">
+                    
+                    <h2 class="header">Week 1</h2>
+                    
+                    <div id="week-1" class="log-form">
+                        
+                        <div id="mon-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>MON</span>
+                                <div class="vl"></div>
+                                <span id="mon-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="mon-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="mon-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tue-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>TUE</span>
+                                <div class="vl"></div>
+                                <span id="tue-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="tue-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="tue-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wed-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>WED</span>
+                                <div class="vl"></div>
+                                <span id="wed-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="wed-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="wed-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="thu-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>THU</span>
+                                <div class="vl"></div>
+                                <span id="thu-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="thu-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="thu-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                 
+                        <div id="fri-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>FRI</span>
+                                <div class="vl"></div>
+                                <span id="fri-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="fri-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="fri-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sat-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>SAT</span>
+                                <div class="vl"></div>
+                                <span id="sat-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="sat-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="sat-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sun-1" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>SUN</span>
+                                <div class="vl"></div>
+                                <span id="sun-date-1"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="sun-start-1" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="sun-end-1" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="header" >Week 2</h2>
+                    
+                    <div id="week-2" class="log-form">
+                        
+                        
+                        <div id="mon-21" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>MON</span>
+                                <div class="vl"></div>
+                                <span id="mon-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="mon-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="mon-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tue-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>TUE</span>
+                                <div class="vl"></div>
+                                <span id="tue-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="tue-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="tue-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wed-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>WED</span>
+                                <div class="vl"></div>
+                                <span id="wed-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="wed-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="wed-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="thu-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>THU</span>
+                                <div class="vl"></div>
+                                <span id="thu-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="thu-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="thu-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                 
+                        <div id="fri-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>FRI</span>
+                                <div class="vl"></div>
+                                <span id="fri-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="fri-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="fri-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sat-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>SAT</span>
+                                <div class="vl"></div>
+                                <span id="sat-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="sat-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="sat-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sun-2" class="row day-row">
+                            <div id="day-container" class="col span-1-of-3 clear-margins">
+                                <span>SUN</span>
+                                <div class="vl"></div>
+                                <span id="sun-date-2"></span>     
+                            </div>
+                            <div id="time-container" class="col span-2-of-3 clear-margins">
+                                <div id="sun-start-2" class='float-left'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="to">
+                                    <span>To</span>
+                                </div>
+                                <div id="sun-end-2" class='float-right'>
+                                    <div class="input-box">
+                                        <input id="timeInput" type="text" maxlength="5" class="input"
+                                        onblur="onBlurEvent(this)">  
+                                    </div>
+                                    <div class="toggle">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round">
+                                                <span class="pm">PM</span>
+                                                <span class="am">AM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            
+            <div class="row section-step-3">
+                
+<!--
+                <h1>Step 3</h1>
+                <h2>Sign Here</h2>
+-->
+                
+<!--
+                <div class="container-sign">
+                    <canvas id="canvas" style="width:600px; height:300px;" width="600" height="300" class="canvas-sign"></canvas>       
+                    <script src="resources/js/signature-module.js"></script>
+                </div>
+                <div class="container-clear">
+                    <input type="button" value="Clear" class="canvas-clear" />
+                    <script>
+                        $('.canvas-clear').on('click', function(e) {
+                            var $canvas = $('#canvas');
+                            var ctx = $canvas[0].getContext('2d');
+                            c_width = $canvas.width();
+                            c_height = $canvas.height();
+                            ctx.clearRect(0, 0, c_width, c_height);
+                            });
+                    </script>
+                </div>
+-->
+            </div>
+        
+        </section>
+        
+        <section>
+            
+            <div class="row section-step-4">
+<!--
+                <h1>Step 4</h1>
+                <h2>Click generate to make your timesheet</h2>
+-->
+                <p>
+                    <a class="btn btn-full" id="btn-generate" href="#" onclick="modalClickEvents('open')">GENERATE</a>
+                </p>
+            </div>
+            
+        </section>
+            
+        <!-- Modal Content -->
+            
+        </div>
+        </div> 
+        </div>
+        <div class="popup-modal" style="display: none;">
+            <div class="modal-body">
+                <div class="modal-header" style="text-align: center;">
+                    <div class="row">
+                        <div id="back-btn" class="col span-1-of-6" onClick="modalClickEvents('back')">
+                            <img class="modal-back" src="https://img.icons8.com/ios-glyphs/30/8600b7/back.png">
+                        </div>
+                        <div class="col span-4-of-6">
+                            <span id="header-name" style="color: #8600b7;">Sign Below</span>
+                        </div>
+                        <div id="close-btn" class="col span-1-of-6">
+                            <img class="modal-close" src="https://img.icons8.com/ios/50/8600b7/cancel.png" onclick="modalClickEvents('close')">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-content">
+                    <!-- Name -->
+                    <div id="nameInput">
+                        <input id="name" type="text" class="name" placeholder="Your name">   
+                    </div>
+                    <!-- Signature -->
+                    <div id="signature">
+                        <div class=container-sign>
+                            <canvas id="canvas" style="width:600px; height:300px;" width="600" height="300"></canvas>
+                            <script src="resources/js/signature-module.js"></script>
+                        </div>
+                        <hr>
+                        <span class="position-x">X</span>
+                    </div>
+                    
+                    <!--Signature line -->
+                    
+                </div>
+                <div class="modal-footer">
+                    <div class="float-right" style="margin-right: 20px;">
+                        <a id="clear-sign" href="#" class="btn1 clear-btn" onclick="modalClickEvents('clear')">Clear</a>
+                        <a href="#" class="btn1 continue-btn" onClick="modalClickEvents('continue')">Continue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

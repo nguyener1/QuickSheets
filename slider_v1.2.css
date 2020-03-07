@@ -1,0 +1,131 @@
+/* Colors
+green:  #7cba3f;
+purple: #8600b7;
+light-purple: #f6f1fd;
+*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 54.5px;
+  height: 25px;
+  z-index: 2;
+  overflow: hidden;
+    
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+ 
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #8600b7;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 23px;
+  width: 16px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:hover {
+  -webkit-transition: .1s;
+  transition: .1s;
+  background-color: #68008e;
+}
+
+.slider:active {
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #7cba3f;
+}
+    
+input:checked + .slider:hover {
+  
+  background-color: #619131;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(37px);
+  -ms-transform: translateX(37px);
+  transform: translateX(37px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 10px / 20px;
+}
+
+.slider.round:before {
+  border-radius: 10px / 20px;
+}
+
+/*AM PM tags*/
+    
+.am,
+.pm {
+    position: absolute;
+    display: inline-block;
+    color: white;
+    font-size: 16px;
+    font-family: 'Verdana';
+    top: 3px;
+    height: 100%;
+    z-index: -100px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    z-index: 100;
+}
+.pm {
+    left: 23px;
+}
+.am {
+    left: -28px;
+}
+
+    input:checked + .slider .pm{
+        -webkit-transform: translateX(37px);
+        -ms-transform: translateX(37px);
+        transform: translateX(37px);      
+        
+    }
+    input:checked + .slider .am{
+        -webkit-transform: translateX(37px);
+        -ms-transform: translateX(37px);
+        transform: translateX(37px);
+
+    }
+
+.shrink{
+-webkit-transform:scale(0.5);
+-moz-transform:scale(0.5);
+-ms-transform:scale(0.5);
+transform:scale(0.5);
+}
+
+/*
+<label class="switch shrink">
+        <input type="checkbox">
+        <span class="slider round">
+            <span class="am">AM</span>
+            <span class="pm">PM</span>
+        </span>
+    </label>
+*/

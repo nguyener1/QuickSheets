@@ -1,0 +1,89 @@
+html {
+    background-color: #464646;
+    font-size: 16px;
+}
+
+.container {
+    position: relative;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+}
+
+.name {
+    position: absolute;
+    top:    21.5%;
+    left:   35%;
+}
+
+.date, .date2 {
+    position: absolute;
+    top:    25%;
+    left:   27%;
+}
+
+.date2 {
+    left:   59%;
+}
+
+.table-1, .table-2 {
+    position: absolute;
+    display: block;
+    width:    61.2%;
+    height:   19.6%;
+    top:      30.8%;
+    left:     26.1%;
+}
+
+.table-2 {
+    top:    55.85%;
+}
+
+table td {
+    padding:0px !important;
+    margin: 0px;
+}
+tr {
+    
+}
+
+.sum {
+    position: absolute;
+    width:  15.3%;
+    height: 2.8%;
+    top:    75.4%;
+    left:   72%;
+    vertical-align: middle;
+}
+
+.sum span {
+    padding: 0;
+    margin:  0;
+}
+
+td {
+    padding: 0px;
+}
+
+/*CANVAS*/
+
+.container-signature {
+    position: absolute;
+    top:78%;
+    left: 11%;
+}
+
+.signature-css {
+    width: 230px;
+    height: 90px;
+    'border: 2px solid black;
+}
