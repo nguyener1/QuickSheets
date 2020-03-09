@@ -169,12 +169,15 @@ nav img {
     border: none;
 }
 
+/*
 .left {
     border-right: .5px solid #8600b7;
 }
 .right {
     border-left: .5px solid #8600b7;
 }
+*/
+
 .switch-item {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
@@ -344,7 +347,7 @@ nav img {
 }
 
 .continue-btn {
-	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	
 	background-color:#7cba3f;
 	border-radius:5px;
 	border:1px solid #7cba3f;
@@ -355,7 +358,6 @@ nav img {
 	font-weight:bold;
 	padding:11px 23px;
 	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
 }
 .continue-btn:hover {
 	background-color:#619131;
@@ -399,8 +401,6 @@ hr{
     float: right;
     margin-top: 10px;
     margin-right: 20px;
-    height: 30px; 
-    width: 30px;
     transition: transform .1s;
     cursor: pointer;
     transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
