@@ -90,7 +90,9 @@ body {
 }
 
 .btn:hover,
-.btn:active {
+.btn:active,
+.btn:focus{
+    outline: none;
     background-color: #619131;
 }
 /*SETUP*/

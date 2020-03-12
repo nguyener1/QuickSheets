@@ -5,4 +5,5 @@
 - Stopped page from allowing scroll during a modal popup.
 
 *** Updates ***
-- The date container header has an updated look with new icons
+- The date container header has an updated look with new icons.
+- Tabbing order starts with goBack and Previous buttons, then time inputs from top to bottom, left to right, and finally the generate button.
