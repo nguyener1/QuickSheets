@@ -1,2 +1,5 @@
 1.1 Release Notes
-- Signature can now be drawn on touch screen devices
+
+*** Patches ***
+- Signature can now be drawn on touch screen devices.
+- Stopped page from allowing scroll during a modal popup.

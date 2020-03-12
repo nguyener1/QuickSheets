@@ -371,9 +371,11 @@
         };
         
         function openModal(){
+            $('body').addClass('no-scroll')
             $('.popup-modal').css('display', 'flex');
         }
         function closeModal(){
+            $('body').removeClass('no-scroll')
             $('.popup-modal').css('display', 'none');
         }
         function goBack(){

@@ -32,6 +32,10 @@ body {
 
 /*REUSABLE*/
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .red-border {
     border: 1.3px solid red !important;
 }
