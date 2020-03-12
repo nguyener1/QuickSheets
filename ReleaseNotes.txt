@@ -3,3 +3,6 @@
 *** Patches ***
 - Signature can now be drawn on touch screen devices.
 - Stopped page from allowing scroll during a modal popup.
+
+*** Updates ***
+- The date container header has an updated look with new icons
