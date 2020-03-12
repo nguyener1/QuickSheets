@@ -30,12 +30,18 @@ body {
     background-size: cover;
 }
 
+
 /*REUSABLE*/
 
 .no-scroll {
     overflow: hidden;
+/*
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+*/
 }
-
 .red-border {
     border: 1.3px solid red !important;
 }

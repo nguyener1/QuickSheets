@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="vendor/css/grid.css">
         <link rel="stylesheet" href="slider_v1.2.css">
         <link rel="stylesheet" href="popup-modal.css">
+        <link rel="stylesheet" href="queries.css">
         <script src="resources/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script>
@@ -371,12 +372,17 @@
         };
         
         function openModal(){
+
             $('body').addClass('no-scroll')
             $('.popup-modal').css('display', 'flex');
+            
         }
+        
         function closeModal(){
+
             $('body').removeClass('no-scroll')
             $('.popup-modal').css('display', 'none');
+            
         }
         function goBack(){
             var header = $('#header-name').text();
@@ -1135,7 +1141,7 @@
         </div>
         </div> 
         </div>
-        <div class="popup-modal" style="display: none;">
+        <div class="popup-modal" style="display: none; overflow: none;">
             <div class="modal-body">
                 <div class="modal-header" style="text-align: center;">
                     <div class="row">
