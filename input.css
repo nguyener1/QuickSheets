@@ -30,6 +30,30 @@ body {
     background-size: cover;
 }
 
+/*STICKY NAV*/
+
+.sticky-nav {
+    position: fixed;
+    top: -70px;
+    width: 100%;
+    z-index: 10000;
+}
+
+.sticky-nav + .dim {
+    padding-top: 70px;
+}
+
+.sticky-header {
+    position: fixed;
+    top: 2px;
+    width: 100%;
+    box-shadow: 0 1px 5px rgba(182, 182, 182, 0.75) !important; 
+    z-index: 10000;
+}
+
+.sticky-header + #timeSheet {
+    padding-top: 70px;
+}
 
 /*REUSABLE*/
 
@@ -230,8 +254,8 @@ nav img {
     position: relative;
     line-height: 70px;
 }
-#day-container *{
-    display: inline-block;
+
+#day-container * {
     float: left;
 }
 
@@ -243,11 +267,7 @@ nav img {
     margin-left: 15px;
 }
 
-#time-container{
-}
-
 .vl {
-    
     height: 71px;
     width: 1px;
     background-color: #e2e2e2;

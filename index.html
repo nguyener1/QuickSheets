@@ -439,6 +439,8 @@
             $('.modal-content').find('#signature').css('display', 'block');
             
         }
+        
+        
     </script>    
     </head>
     
@@ -499,6 +501,7 @@
                     </div>
                 </div>
                 
+                <div id="timeSheet">
                 <div class="hour-log">
                     
                     <h2 class="header">Week 1</h2>
@@ -793,7 +796,8 @@
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+                <div class="hour-log">
                     <h2 class="header" >Week 2</h2>
                     
                     <div id="week-2" class="log-form">
@@ -1182,5 +1186,33 @@
                 </div>
             </div>
         </div>
+        </div>
     </body>
+<script>
+        
+        //scrollin functions
+        
+        var navbar = $('nav')
+        var navHeight = navbar.height()
+        var x = window.matchMedia("(max-width: 600px)")
+        
+        $(window).scroll(function () {
+            
+            
+            if (!x.matches){
+                return;
+            }
+            
+            var scrollTop = $(window).scrollTop();
+            if (scrollTop > navHeight){
+                $('nav').addClass('sticky-nav');
+                $('.date-container').addClass('sticky-header');
+            }
+            else {
+                $('nav').removeClass('sticky-nav');
+                $('.date-container').removeClass('sticky-header');
+            }
+        })
+
+</script>
 </html>

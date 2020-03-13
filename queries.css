@@ -1,0 +1,88 @@
+
+@media only screen and (max-width: 1080px) {
+    .dim {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+/* Small tablet to big tablet: from 768 to 1023px */
+@media only screen and (max-width: 1023px) {
+    .dim {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .log-form {
+        width: 700px;
+    }
+}
+
+/* Small phones to small tablets: from 481px to 767px */
+@media only screen and (max-width: 767px) {
+    
+    .log-form {
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    
+/*
+    $('#day-container').removeClass('span-1-of-3');
+    $('#day-container').addClass('span-1-of-4');
+    
+    $('#time-container').removeClass('span-2-of-3');
+    $('#time-container').addClass('span-3-of-4');
+*/
+    #day-container.span-1-of-3 {
+        /*become span-1-of-5*/
+        width: 18.72%;
+    }
+    
+    #time-container.span-2-of-3 {
+        /*become span-4-of-5*/
+        width: 79.68%;  
+    }
+    
+    #day-container .vl {
+        display: none;
+    }
+    
+    #day-container span:first-of-type {
+        display: block;
+        clear: left;
+        line-height: normal;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    #day-container span:last-of-type {
+        margin-left: 0;
+        clear: left;
+        line-height: normal;
+        width: 100%;
+    }
+    
+    h2 {
+        margin: 0;
+    }
+    
+    .hour-log {
+        margin: 20px 0;
+    }
+    
+    .to span {
+        display: none;
+    }
+    
+    .to:after {
+        content: '-';
+    }
+    
+    .date-container {
+        background-color: #FFFFFF;
+        text-align: center;
+        box-shadow: none;
+    }
+}
