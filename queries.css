@@ -82,4 +82,8 @@
     .modal-body {
         width: 95%;
     }
+    
+    hr {
+        width: 80%;
+    }
 }

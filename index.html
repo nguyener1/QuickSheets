@@ -351,6 +351,7 @@
         }
         
         /* modal scripts */
+        var media = window.matchMedia("(max-width: 600px)")
         
         function modalClickEvents(e) {
             if (e == 'open') {
@@ -375,6 +376,7 @@
 
             $('body').addClass('no-scroll')
             $('.popup-modal').css('display', 'flex');
+            $('.modal-body').removeClass('rotate-right');
             
         }
         
@@ -415,6 +417,7 @@
                 clearCanvas();
             }
         }
+        
         function clearCanvas() {
             var $canvas = $('#canvas');
             var ctx = $canvas[0].getContext('2d');
@@ -438,8 +441,20 @@
             $('.popup-modal').find('#nameInput').css('display', 'none');
             $('.modal-content').find('#signature').css('display', 'block');
             
+            if (media.matches){
+                
+                //screen in landscape mode
+                if ( screen.width > screen.height ){
+                    //$('.modal-body').addClass('rotate-right');
+                }
+
+                //screen in portait mode
+                if ( screen.width < screen.height ){
+
+                }
+                
+            }
         }
-        
         
     </script>    
     </head>

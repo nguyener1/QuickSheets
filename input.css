@@ -479,3 +479,12 @@ hr{
     border-bottom: 2px solid #8600b7;
     margin-top: 100px;
 }
+
+.rotate-right {
+    transform-origin: center;
+    transform: rotate(90deg); 
+}
+
+.width-closer {
+    
+}
