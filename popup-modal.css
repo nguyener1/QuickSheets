@@ -17,19 +17,20 @@
     border-radius: 4px;
     box-shadow: 10px, 10px, black;
     box-shadow: 0 0 1em #888;
+    width: 600px;
     
 }
 .modal-content {
-    width: 600px;
+
     height: 300px;
 }
 
 .modal-header {
-    width: 600px;
+
     height: 60px;
 }
 
 .modal-footer {
-    width: 600px;
+
     height: 60px;
 }

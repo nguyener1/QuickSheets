@@ -79,5 +79,7 @@
         content: '-';
     }
     
-
+    .modal-body {
+        width: 95%;
+    }
 }
