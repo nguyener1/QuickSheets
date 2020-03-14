@@ -4,6 +4,12 @@
         width: 100%;
         padding: 0;
     }
+    
+    .date-container {
+        background-color: #FFFFFF;
+        text-align: center;
+        box-shadow: none;
+    }
 }
 
 /* Small tablet to big tablet: from 768 to 1023px */
@@ -28,13 +34,6 @@
 
 @media only screen and (max-width: 600px) {
     
-/*
-    $('#day-container').removeClass('span-1-of-3');
-    $('#day-container').addClass('span-1-of-4');
-    
-    $('#time-container').removeClass('span-2-of-3');
-    $('#time-container').addClass('span-3-of-4');
-*/
     #day-container.span-1-of-3 {
         /*become span-1-of-5*/
         width: 18.72%;
@@ -80,9 +79,5 @@
         content: '-';
     }
     
-    .date-container {
-        background-color: #FFFFFF;
-        text-align: center;
-        box-shadow: none;
-    }
+
 }
