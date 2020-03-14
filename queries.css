@@ -87,3 +87,31 @@
         width: 80%;
     }
 }
+
+@media only screen and (max-width: 500px) {
+    
+    html {
+        font-size: 16px;
+    }
+    #day-container.span-1-of-3 {
+        /*become span-1-of-6*/
+        width: 15.33%;
+    }
+    
+    #time-container.span-2-of-3 {
+        /*become span-5-of-6*/
+        width: 83.06%; 
+    }
+    
+    .input {
+        width: 50px;
+    }
+    
+    .switch {
+        transform: scale(.8);
+    }
+    
+    .toggle {
+        margin-left: 0;
+    }
+}
