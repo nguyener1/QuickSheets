@@ -142,6 +142,7 @@ h2 {
     background-color: #FFF;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    text-align: center;
 }
 
 .dim {
@@ -186,11 +187,12 @@ nav img {
     background-color: #FFFFFF;
     text-align: center;
     box-shadow: 0 1px 5px rgba(182, 182, 182, 0.75);
+    height: 70px;
 }
 
 .date-container button,
 .date-container span {
-    height: 70px;
+    height: 100%;
 }
 
 /*STEP 1*/
@@ -199,12 +201,26 @@ nav img {
     text-align: center;
 }
 
+.switch-container{
+    width: 20%;
+}
+
 .switch-button {
     width: 100%;
     background-color: #ffffff;
     border: none;
 }
 
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+
+.middle {
+    margin: 0 auto;
+}
 /*
 .left {
     border-right: .5px solid #8600b7;
@@ -215,12 +231,15 @@ nav img {
 */
 
 .switch-item {
+/*
     margin-top: 0px !important;
     margin-bottom: 0px !important;
+*/
+    display: inline-block;
     height: 100%;
 }
 
-.switch-item span {
+.switch-item span{
     line-height: 70px;
 }
 

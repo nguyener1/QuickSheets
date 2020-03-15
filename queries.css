@@ -86,6 +86,8 @@
     hr {
         width: 80%;
     }
+    
+    
 }
 
 @media only screen and (max-width: 500px) {
@@ -104,7 +106,7 @@
     }
     
     .input {
-        width: 50px;
+        width: 40px;
     }
     
     .switch {
@@ -113,5 +115,35 @@
     
     .toggle {
         margin-left: 0;
+    }
+    
+    #left-button img,
+    #right-button img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    
+    .switch-item span {
+        line-height: 50px;
+    }
+    
+    .date-container {
+        height: 50px;
+    }
+    
+
+    .sticky-header {
+        position: fixed;
+        top: 2px;
+        width: 100%;
+        box-shadow: 0 1px 5px rgba(182, 182, 182, 0.75) !important; 
+        z-index: 10000;
+    }
+
+    .sticky-header + #timeSheet {
+        padding-top: 50px;
     }
 }

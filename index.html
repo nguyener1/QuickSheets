@@ -193,12 +193,29 @@
         
         function fillWeekHeader(Mon, Sun) {
             
-            var mondayDate = stringifyDate(Mon),
+            var mondayDate,
+                sundayDate;
+            
+            
+            var media = window.matchMedia("(max-width: 350px)")
+            if (media.matches){
+                mondayDate = stringifyMMDD(Mon);
+                sundayDate = stringifyMMDD(Sun);
+            }
+            else {
+                mondayDate = stringifyDate(Mon),
                 sundayDate = stringifyDate(Sun);
+            }
             
              $('#week').text(mondayDate + ' - ' + sundayDate);
         }
         
+        function stringifyMMDD(date) {
+            var month    = date.getMonth() + 1,
+                day      = date.getDate();
+            
+            return month + '/' + day
+        }
         function stringifyDate(date){
             
             var month    = date.getMonth() + 1,
@@ -233,7 +250,7 @@
                 newSunday = goForwardOneWeek(sunday);
             }
             
-            $('#week').text(stringifyDate(newMonday) + ' - ' + stringifyDate(newSunday));
+            fillWeekHeader(newMonday, newSunday);
             currentMon = newMonday;
             currentSun = newSunday;
         }
@@ -482,14 +499,14 @@
         
         <div class="dim">
             <div class="container">
-            <div class="row section-step-1">
+<!--            <div class="row section-step-1">-->
                 
                 <!--<h1>Step 2</h1>
                 <h2>Log your hours</h2>-->
                 
                 <div class="date-container">
-                    <div class="row">
-                        <div class="col span-1-of-5 switch-item" id="left-button">
+<!--                    <div class="row">-->
+                        <div class="switch-container float-left switch-item" id="left-button">
                             <button class="switch-icon switch-button" type="button" tabindex="1" id="go-back">
                             <img src="https://img.icons8.com/ios/30/8600b7/long-arrow-left.png">
                             </button>
@@ -499,12 +516,12 @@
                             });
                             </script>
                         </div>
-                        <div class="col span-3-of-5 switch-item">
+                        <div class="middle switch-item">
                             
                             <span id="week"></span>
                             
                         </div>
-                        <div class="col span-1-of-5 switch-item" id="right-button">
+                        <div class="switch-container float-right switch-item" id="right-button">
                             <button class="switch-icon switch-button" type="button" tabindex="1" id="go-forward">
                             <img src="https://img.icons8.com/ios/30/8600b7/long-arrow-right.png">
                             </button>
@@ -514,7 +531,7 @@
                             });
                             </script>
                         </div>
-                    </div>
+<!--                    </div>-->
                 </div>
                 
                 <div id="timeSheet">
@@ -1158,7 +1175,7 @@
             
         <!-- Modal Content -->
             
-        </div>
+<!--        </div>-->
         </div> 
         </div>
         <div class="popup-modal" style="display: none; overflow: none;">
@@ -1211,6 +1228,7 @@
         var navbar = $('nav')
         var navHeight = navbar.height()
         var x = window.matchMedia("(max-width: 1080px)")
+        var media350 = window.matchMedia("(max-width: 350px)")
         
         $(window).scroll(function () {
             
@@ -1228,7 +1246,13 @@
                 $('nav').removeClass('sticky-nav');
                 $('.date-container').removeClass('sticky-header');
             }
-        })
+        });
+        
+        function resize() {
+            fillWeekHeader(currentMon, currentSun);
+        }
+        
+        media350.addListener(resize);
 
 </script>
 </html>
