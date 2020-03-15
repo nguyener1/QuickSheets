@@ -82,6 +82,10 @@ body {
     clear: both;
 }
 
+.text-center{
+    text-align: center;
+}
+
 .log-form {
     box-sizing: border-box;
     width: 65%;
@@ -164,13 +168,15 @@ nav {
 }
 
 nav img {
-    margin: 0;
-    position: absolute;
+/*    margin: 0;*/
+/*    position: absolute;*/
     height: 100%;
+/*
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+*/
 
 }
 /*TEST*/

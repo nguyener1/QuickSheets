@@ -10,6 +10,10 @@
         text-align: center;
         box-shadow: none;
     }
+    
+    nav img {
+        transform: scale(.7);
+    }
 }
 
 /* Small tablet to big tablet: from 768 to 1023px */
@@ -146,4 +150,25 @@
     .sticky-header + #timeSheet {
         padding-top: 50px;
     }
+    
+    .sticky-nav {
+        position: fixed;
+        top: -50px;
+        width: 100%;
+        z-index: 10000;
+    }
+
+    .sticky-nav + .dim {
+        padding-top: 50px;
+    }
+    
+    nav {
+        height: 50px;
+    }
+    
+    nav img {
+        content:url('resources/images/AGA-small-logo.jpg');
+        transform: scale(1)
+    }
+    
 }
