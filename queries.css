@@ -99,6 +99,7 @@
     html {
         font-size: 16px;
     }
+    
     #day-container.span-1-of-3 {
         /*become span-1-of-6*/
         width: 15.33%;
@@ -111,6 +112,7 @@
     
     .input {
         width: 55px;
+        padding: 0px 4px;
     }
     
     .switch {
