@@ -327,6 +327,7 @@ nav img {
 .inline {
     display: inline-block;
 }
+
 .float-left {
     float: left;
 }
@@ -455,9 +456,7 @@ hr{
 }
 
 .modal-close {
-    float: right;
     margin-top: 10px;
-    margin-right: 20px;
     transition: transform .1s;
     cursor: pointer;
     transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
@@ -468,14 +467,25 @@ hr{
 }
 
 .modal-back {
-    float: left;
-    margin-top: 10px;
-    margin-left: 20px;
     height: 30px; 
     width: 30px;
     transition: transform .1s;
     transform: scale(1.2);
-    
+}
+
+.modal-back, 
+.modal-close {
+    margin-top: 15px;
+}
+
+#modal-title {
+    margin-top: 5px;
+}
+
+#back-btn,
+#close-btn {
+    height: 100%;
+    width: 10%;
 }
 
 #back-btn {

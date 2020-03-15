@@ -91,7 +91,6 @@
         width: 80%;
     }
     
-    
 }
 
 @media only screen and (max-width: 500px) {
@@ -127,6 +126,36 @@
     #right-button img {
         width: 25px;
         height: 25px;
+    }
+    
+    /*Modal Popup*/
+    #close-btn img, 
+    #back-btn img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .modal-close,
+    .modal-back {
+        margin-top: 15px;    
+    }
+    
+    #close-btn, 
+    #back-btn {
+        width: 15%; 
+    }
+    
+    #modal-title {
+        height: 100%;
+        margin: 0;
+    }
+    
+    .modal-header{
+        height: 50px;
+    }
+    
+    #header-name {
+        font-size: 22px;
     }
 }
 
@@ -169,7 +198,6 @@
     
     nav img {
         content:url('resources/images/AGA-small-logo.jpg');
-        transform: scale(1)
+        transform: scale(1);
     }
-    
 }
