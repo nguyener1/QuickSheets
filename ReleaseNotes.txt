@@ -8,3 +8,4 @@
 - The date container header has an updated look with new icons.
 - Tabbing order starts with goBack and Previous buttons, then time inputs from top to bottom, left to right, and finally the generate button.
 - Main page is responsive to different window sizes.
+- Popup modal for name input and signature are responsive to different window sizes and stable down to iPhone 6/7/8 sizes

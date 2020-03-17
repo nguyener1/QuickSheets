@@ -157,6 +157,11 @@
     #header-name {
         font-size: 22px;
     }
+    
+    .name {
+        height: 30px;
+        font-size: 22px;
+    }
 }
 
 @media only screen and (max-width: 350px) {
