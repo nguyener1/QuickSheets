@@ -290,16 +290,13 @@
             try {
                 
                 if (dates.length != date_ids.length) { throw dates.length; }
-
-                for (var i = 0; i < date_ids.length; i++) {
+                
+                date_ids.forEach( (date, index) => {
+                    var dateID = '#' + date;
+                    var dd = dates[index].getDate();
                     
-                    var dd = dates[i].getDate(),
-                        mm = dates[i].getMonth() + 1,
-                        yyyy = dates[i].getFullYear();
-                    
-                    var stringDate = (mm + '/' + dd);
-                    $('#' + date_ids[i]).text(stringDate);
-                }
+                    $(dateID).text(dd);
+                });
                 
             } catch (e) {
                 console.log('Incorrect number of dates. There are ' + e + ' dates');
