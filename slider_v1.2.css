@@ -6,7 +6,7 @@ light-purple: #f6f1fd;
 .switch {
   position: relative;
   display: inline-block;
-  width: 54.5px;
+  width: 55px;
   height: 25px;
   z-index: 2;
   overflow: hidden;

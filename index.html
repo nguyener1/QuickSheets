@@ -10,9 +10,11 @@
         <link rel="stylesheet" href="slider_v1.2.css">
         <link rel="stylesheet" href="popup-modal.css">
         <link rel="stylesheet" href="queries.css">
+        <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
         <script src="resources/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script>
+            
   
             var ids = [ 'mon-date-1', 'mon-start-1', 'mon-end-1',
                         'tue-date-1', 'tue-start-1', 'tue-end-1',
@@ -172,6 +174,8 @@
 
         var startMon, endSun, currentMon, currentSun;
         var canvas, container;
+        var media350 = window.matchMedia("only screen and (max-width: 350px)");
+        var media500 = window.matchMedia("only screen and (max-width: 500px)");
         
         $(document).ready(function() {
             initWeekRange();
@@ -184,6 +188,7 @@
             container = $(canvas).parent();
             
             $(window).resize( responsiveCanvas );
+            //$(window).resize( fillWeekHeader( currentMon, currentSun ) );
             
         });
         
@@ -208,19 +213,25 @@
             var mondayDate,
                 sundayDate;
             
-            
-            var media = window.matchMedia("(max-width: 350px)")
-            if (media.matches){
+            if (media500.matches){
                 mondayDate = stringifyMMDD(Mon);
                 sundayDate = stringifyMMDD(Sun);
+                console.info("the view port is at most 350 pixels wide")
             }
+//            else if (media500.matches){
+//                mondayDate = stringifyMMDDYY(Mon);
+//                sundayDate = stringifyMMDDYY(Sun);
+//                console.info("the view port is at most 500 pixels wide")
+//            }
             else {
                 mondayDate = stringifyDate(Mon),
                 sundayDate = stringifyDate(Sun);
+                console.info("the view port is bigger than 500 pixels wide")
             }
             
-             $('#week').text(mondayDate + ' - ' + sundayDate);
+            $('#week').text(mondayDate + ' - ' + sundayDate);
         }
+        
         
         function stringifyMMDD(date) {
             var month    = date.getMonth() + 1,
@@ -228,6 +239,16 @@
             
             return month + '/' + day
         }
+        
+        function stringifyMMDDYY(date){
+            var month    = date.getMonth() + 1,
+                day      = date.getDate(),
+                fullYear = date.getFullYear(),
+                year     = fullYear.toString().substring(2);
+            
+            return month + '/' + day + '/' + year;
+        }
+        
         function stringifyDate(date){
             
             var month    = date.getMonth() + 1,
@@ -1278,6 +1299,7 @@
         }
         
         media350.addListener(resize);
+        //media500.addListener(resize);
 
 </script>
 </html>

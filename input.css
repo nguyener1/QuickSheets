@@ -8,6 +8,7 @@ html {
     background-color: #FFF;
     font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
+    color: #3d4138;
 }
 
 h1, h2 {
@@ -502,9 +503,12 @@ hr{
 #back-btn {
     cursor: pointer;
 }
-#back-btn:hover .modal-back {
-    
-    transform: translateX(-10px) ;
+
+#week{
+    font-weight: bold;
+    letter-spacing: 0.00em;
+    font-size: 18px;
+    color: #8600b7;
 }
 
 #header-name {

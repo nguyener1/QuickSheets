@@ -38,9 +38,22 @@
 
 @media only screen and (max-width: 600px) {
     
+    #day-container {
+        font-size: 14px;
+        font-weight:;
+    }
+    
+    #day-container span: first-of-type {
+        margin-top: 0px;   
+    }
+    
     #day-container.span-1-of-3 {
         /*become span-1-of-5*/
         width: 18.72%;
+    }
+    
+    .day-row {
+        height: 65px;
     }
     
     #time-container.span-2-of-3 {
@@ -57,7 +70,7 @@
         clear: left;
         line-height: normal;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
     }
     
     #day-container span:last-of-type {
