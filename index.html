@@ -213,20 +213,18 @@
             var mondayDate,
                 sundayDate;
             
-            if (media500.matches){
+            if (media350.matches){
                 mondayDate = stringifyMMDD(Mon);
                 sundayDate = stringifyMMDD(Sun);
-                console.info("the view port is at most 350 pixels wide")
+
             }
-//            else if (media500.matches){
-//                mondayDate = stringifyMMDDYY(Mon);
-//                sundayDate = stringifyMMDDYY(Sun);
-//                console.info("the view port is at most 500 pixels wide")
-//            }
+            else if (media500.matches){
+                mondayDate = stringifyMMDDYY(Mon);
+                sundayDate = stringifyMMDDYY(Sun);
+            }
             else {
                 mondayDate = stringifyDate(Mon),
                 sundayDate = stringifyDate(Sun);
-                console.info("the view port is bigger than 500 pixels wide")
             }
             
             $('#week').text(mondayDate + ' - ' + sundayDate);
@@ -1298,7 +1296,7 @@
             fillWeekHeader(currentMon, currentSun);
         }
         
-        media350.addListener(resize);
+        media500.addListener(resize);
         //media500.addListener(resize);
 
 </script>
