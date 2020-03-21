@@ -94,14 +94,36 @@ body {
     overflow: auto;
 }
 
+.day-row:hover {
+    background-color: #faf7ff;
+}
+
 .input {
     height: 35px;
     width: 70px;
     padding: 0px 10px;
     border-radius: 3px;
-    border: none;
-    background-color: #f4f4f4;
+    border: .5px solid #d4d4d4;
+    background-color: #f7f7f7;
     
+}
+
+.input:focus {
+    outline: none;
+    box-shadow: 0 0 0 .5pt #8600b7;
+    background-color: #fff;
+
+}
+
+.input:hover {
+    outline: none;
+    box-shadow: 0 0 3pt 1.5pt #e2e2e2;
+}
+
+.no-hover:hover {
+    outline: none;
+    box-shadow: none;
+    box-shadow: 0 0 0 .5pt #8600b7;
 }
 
 .input-box input[type="text"]{
@@ -110,6 +132,11 @@ body {
     direction: ltr !important;
     unicode-bidi: bidi-override !important;
     font-size: 18px;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
 }
 
 .btn:link,

@@ -98,7 +98,6 @@
             }
             
             function saveCanvas() {
-                //localStorage["canvas"] = serialize(document.getElementById('canvas'));
                 var signature = serialize(document.getElementById('canvas'));
                 localStorage['canvas'] = signature;
             }
@@ -347,12 +346,18 @@
             return list;
         }
         
+        function onFocusEvent(e) {
+            var el = $(e);
+            el.addClass('no-hover');
+        }
+        
         function onBlurEvent(e) {
             
             var el = $(e);
             var str = el.val();
             var newStr = '';
             
+            el.removeClass('no-hover')
             if( str == '' ){
                 el.removeClass("red-border");
                 return;
@@ -478,7 +483,6 @@
             $('#header-name').text('Enter Your Name');
             $('.modal-content').find('#signature').css('display', 'none');
             $('.popup-modal').find('#nameInput').css('display', 'block');
-            
         }
         
         //displays canvas for signing
@@ -591,7 +595,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="mon-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -609,7 +613,7 @@
                                 <div id="mon-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -632,7 +636,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="tue-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -650,7 +654,7 @@
                                 <div id="tue-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -673,7 +677,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="wed-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -691,7 +695,7 @@
                                 <div id="wed-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -714,7 +718,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="thu-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -732,7 +736,7 @@
                                 <div id="thu-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -755,7 +759,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="fri-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -773,7 +777,7 @@
                                 <div id="fri-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -796,7 +800,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="sat-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -814,7 +818,7 @@
                                 <div id="sat-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -837,7 +841,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="sun-start-1" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -855,7 +859,7 @@
                                 <div id="sun-end-1" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -886,7 +890,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="mon-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -904,7 +908,7 @@
                                 <div id="mon-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -927,7 +931,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="tue-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -945,7 +949,7 @@
                                 <div id="tue-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -968,7 +972,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="wed-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -986,7 +990,7 @@
                                 <div id="wed-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1009,7 +1013,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="thu-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1027,7 +1031,7 @@
                                 <div id="thu-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1050,7 +1054,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="fri-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1068,7 +1072,7 @@
                                 <div id="fri-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1091,7 +1095,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="sat-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1109,7 +1113,7 @@
                                 <div id="sat-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1132,7 +1136,7 @@
                             <div id="time-container" class="col span-2-of-3 clear-margins">
                                 <div id="sun-start-2" class='float-left'>
                                     <div class="input-box">
-                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)">
+                                        <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input" onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">
@@ -1150,7 +1154,7 @@
                                 <div id="sun-end-2" class='float-right'>
                                     <div class="input-box">
                                         <input id="timeInput" type="text" tabindex="2" maxlength="5" class="input"
-                                        onblur="onBlurEvent(this)">  
+                                        onblur="onBlurEvent(this)" onfocus="onFocusEvent(this)" autocomplete="off">  
                                     </div>
                                     <div class="toggle">
                                         <label class="switch">

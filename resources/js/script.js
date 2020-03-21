@@ -86,7 +86,7 @@ function getHourSide (str){
         return hh;
     }
     
-    for (let i = 0; i < str.length; i++){
+    for (var i = 0; i < str.length; i++){
         if (str[i] == ':'){
             return hh;
         }
@@ -104,7 +104,7 @@ function getMinSide (str){
         return mm;
     }
     
-    for (let i = str.length - 1; i >= 0; i--){
+    for (var i = str.length - 1; i >= 0; i--){
         if (str[i] == ':')
             return mm;
         mm = str[i] + mm;
@@ -124,13 +124,13 @@ function getHH(str){
         if (isNaN(hh)){
             return hh;
         }
+    
         if (parseInt(hh) < 1 && parseInt(hh) > 12){
             
         } else {
             return hh;
         }
-
-    
+  
 }
 
 //takes in a string assumed to be two digits or less
@@ -171,9 +171,14 @@ function appendZeros(count, num){
     return num;
 }
 
+/* AutoComplete */
 
+function autoComplete(){
+    
+}
 
-
-
+function reloadHours(){
+    
+}
 
          
