@@ -29,6 +29,7 @@ class SignTool {
     document.body.addEventListener("touchend", (e) => this.stopScrolling(e), { passive: false })
     document.body.addEventListener("touchmove", (e) => this.stopScrolling(e), { passive: false })
   }
+
 //Signature by Mouse
   onMouseDown(e) {
     this.isMouseClicked = true
@@ -115,7 +116,5 @@ class SignTool {
 }
 
 //Signature by Touch
- 
-
 
 var canvas = new SignTool()

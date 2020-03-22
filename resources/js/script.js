@@ -14,16 +14,16 @@ function isAllNumbers(str){
 function isTime(str){
     
     if (str == null){
-        console.log('is null');
+        //console.log('is null');
         return false;
     }
     if (count(str, ':') >=2){
-        console.log('too many colons');
+        //console.log('too many colons');
         return false;
     }
 
     if (!isAllNumbers(str)){
-        console.log('not all numbers');
+        //console.log('not all numbers');
         return false;
     }
     return true;
@@ -33,12 +33,12 @@ function isTime(str){
 function autoCompleteTime(str){
     
     if (str == null){
-        console.log('empty field');
+        //console.log('empty field');
         return;
     }
     
     if (!isTime(str)){
-        console.log(str + ' is not a time');
+        //console.log(str + ' is not a time');
         return str;
     }
     

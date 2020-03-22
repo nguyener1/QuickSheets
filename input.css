@@ -67,8 +67,9 @@ body {
     position: fixed;
 */
 }
+
 .red-border {
-    border: 1.3px solid red !important;
+    box-shadow: 0 0 0 1pt red !important;
 }
 
 .vertical-center {
@@ -96,6 +97,11 @@ body {
 
 .day-row:hover {
     background-color: #faf7ff;
+}
+
+input {
+    caret-color: #8600b7;
+    outline: none;
 }
 
 .input {
@@ -139,6 +145,7 @@ button {
     outline: none;
 }
 
+/*
 .btn:link,
 .btn:visited {
     color: #FFFFFF;
@@ -157,6 +164,27 @@ button {
     outline: none;
     background-color: #619131;
 }
+*/
+
+.btn {
+    color: #FFFFFF;
+    background-color: #7cba3f;
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 7px;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+    outline: none;
+    background-color: #619131;
+}
+
 /*SETUP*/
 .row {
     margin: 0 auto;
@@ -419,14 +447,14 @@ nav img {
 /* Buttons */
 .btn1 {
     text-align: center;
+    transition: .1s ease-out;
 }
-.clear-btn, .continue-btn {
-}
+
 
 .clear-btn {
 	background-color:#fff;
 	border-radius:5px;
-	border:1px solid #7cba3f;
+	border: 1px solid #7cba3f;
 	display:inline-block;
 	cursor:pointer;
 	color:#7cba3f;
@@ -438,17 +466,17 @@ nav img {
 }
 .clear-btn:hover {
     background-color:#f2f2f2;
+    box-shadow: 0 0 0 1.5px #7cba3f;
 }
 .clear-btn:active {
-	position:relative;
-	top:1px;
+    
 }
 
 .continue-btn {
 	
 	background-color:#7cba3f;
 	border-radius:5px;
-	border:1px solid #7cba3f;
+	border: 1px solid #7cba3f;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -458,12 +486,12 @@ nav img {
 	text-decoration:none;
 }
 .continue-btn:hover {
-	background-color:#619131;
-    border: 1px solid #619131;
+	background-color:#FFF;
+    color: #7cba3f;
+    box-shadow: 0 0 0 1px #7cba3f;
 }
 .continue-btn:active {
-	position:relative;
-	top:1px;
+
 }
 
 /* Signature items*/
@@ -482,6 +510,7 @@ hr{
     width: 80%;
     border: 1px solid #8600b7; 
     pointer-events: none;
+    background-color: #8600b7;
 }
 
 .position-x {
@@ -501,15 +530,19 @@ hr{
     transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
 }
 
+/*
 .modal-close:hover {
     transform: scale(1.1) rotate(90deg);
 }
+*/
 
 .modal-back {
     height: 30px; 
     width: 30px;
+/*
     transition: transform .1s;
     transform: scale(1.2);
+*/
 }
 
 .modal-back, 
@@ -559,10 +592,12 @@ hr{
     border-bottom: 2px solid #8600b7;
 }
 
+/*
 .rotate-right {
     transform-origin: center;
     transform: rotate(90deg); 
 }
+*/
 
 .width-closer {
     

@@ -425,16 +425,16 @@
         
         function openModal(){
 
-            $('body').addClass('no-scroll')
-            $('.popup-modal').css('display', 'flex');
-            $('.modal-body').removeClass('rotate-right');
+            $('body').addClass('no-scroll');
+            $('.popup-modal').addClass('modal-show');
+//            ('.modal-body').removeClass('rotate-right');
             
         }
         
         function closeModal(){
 
-            $('body').removeClass('no-scroll')
-            $('.popup-modal').css('display', 'none');
+            $('body').removeClass('no-scroll');
+            $('.popup-modal').removeClass('modal-show');
             
         }
         function goBack(){
@@ -1210,10 +1210,15 @@
 <!--
                 <h1>Step 4</h1>
                 <h2>Click generate to make your timesheet</h2>
--->
+-->             <button type="button" class="btn" id="btn-generate" tabindex="3"
+                        onclick="modalClickEvents('open')">
+                    GENERATE
+                </button>
+<!--
                 <p>
                     <a class="btn" id="btn-generate" tabindex="3" href="#" onclick="modalClickEvents('open')">GENERATE</a>
                 </p>
+-->
             </div>
             
         </section>
@@ -1223,25 +1228,25 @@
 <!--        </div>-->
         </div> 
         </div>
-        <div class="popup-modal" style="display: none; overflow: none;">
+        <div class="popup-modal effect">
             <div id="modal-body" class="modal-body">
                 <div class="modal-header" style="text-align: center;">
 <!--                    <div class="row">-->
                         <div id="back-btn" class="float-left" onClick="modalClickEvents('back')">
-                            <img class="modal-back" src="https://img.icons8.com/ios-glyphs/30/8600b7/back.png">
+                            <img class="modal-back" src="https://img.icons8.com/ios-glyphs/20/626262/back.png">
                         </div>
                         <div id="modal-title" class="inline">
                             <span id="header-name" style="color: #8600b7;">Sign Below</span>
                         </div>
                         <div id="close-btn" class="float-right">
-                            <img class="modal-close" src="https://img.icons8.com/ios/30/8600b7/cancel.png" onclick="modalClickEvents('close')">
+                            <img class="modal-close" src="https://img.icons8.com/ios-filled/20/626262/delete-sign.png" onclick="modalClickEvents('close')">
                         </div>
 <!--                    </div>-->
                 </div>
                 <div id="modal-content" class="modal-content">
                     <!-- Name -->
                     <div id="nameInput">
-                        <input id="name" type="text" class="name" placeholder="Your name">   
+                        <input id="name" type="text" class="name" placeholder="Your name" autocomplete="off">   
                     </div>
                     <!-- Signature -->
                     <div id="signature">
@@ -1261,8 +1266,8 @@
                 </div>
                 <div class="modal-footer">
                     <div class="float-right" style="margin-right: 20px;">
-                        <a id="clear-sign" href="#" class="btn1 clear-btn" onclick="modalClickEvents('clear')">Clear</a>
-                        <a href="#" class="btn1 continue-btn" onClick="modalClickEvents('continue')">Continue</a>
+                        <button id="clear-sign" class="btn1 clear-btn" onclick="modalClickEvents('clear')">Clear</button>
+                        <button class="btn1 continue-btn" onClick="modalClickEvents('continue')">Continue</button>
                     </div>
                 </div>
             </div>
