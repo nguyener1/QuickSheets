@@ -29,6 +29,7 @@ class SignTool {
     document.body.addEventListener("touchend", (e) => this.stopScrolling(e), { passive: false })
     document.body.addEventListener("touchmove", (e) => this.stopScrolling(e), { passive: false })
   }
+    
 //Signature by Mouse
   onMouseDown(e) {
     this.isMouseClicked = true
@@ -46,7 +47,7 @@ class SignTool {
 
   onMouseOut() {
     this.isMouseInCanvas = false
-    this.isMouseClicked = false
+//    this.isMouseClicked = false
   }
 
   onMouseMove(e) {
@@ -114,8 +115,13 @@ class SignTool {
 
 }
 
+function clearCanvas() {
+            var $canvas = $('#canvas');
+            var ctx = $canvas[0].getContext('2d');
+            c_width = $canvas.width();
+            c_height = $canvas.height();
+            ctx.clearRect(0, 0, c_width, c_height);
+        };
 //Signature by Touch
- 
-
 
 var canvas = new SignTool()

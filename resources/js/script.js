@@ -14,16 +14,16 @@ function isAllNumbers(str){
 function isTime(str){
     
     if (str == null){
-        console.log('is null');
+        //console.log('is null');
         return false;
     }
-    if (count(str, ':') >=2){
-        console.log('too many colons');
+    if (count(str, ':') >= 2){
+        //console.log('too many colons');
         return false;
     }
 
     if (!isAllNumbers(str)){
-        console.log('not all numbers');
+        //console.log('not all numbers');
         return false;
     }
     return true;
@@ -33,16 +33,15 @@ function isTime(str){
 function autoCompleteTime(str){
     
     if (str == null){
-        console.log('empty field');
+        //console.log('empty field');
         return;
     }
     
     if (!isTime(str)){
-        console.log(str + ' is not a time');
+        //console.log(str + ' is not a time');
         return str;
     }
     
-        
     var a = count(str,':');
     var hh,mm;
     switch (a){
@@ -86,7 +85,7 @@ function getHourSide (str){
         return hh;
     }
     
-    for (let i = 0; i < str.length; i++){
+    for (var i = 0; i < str.length; i++){
         if (str[i] == ':'){
             return hh;
         }
@@ -104,7 +103,7 @@ function getMinSide (str){
         return mm;
     }
     
-    for (let i = str.length - 1; i >= 0; i--){
+    for (var i = str.length - 1; i >= 0; i--){
         if (str[i] == ':')
             return mm;
         mm = str[i] + mm;
@@ -124,13 +123,13 @@ function getHH(str){
         if (isNaN(hh)){
             return hh;
         }
+    
         if (parseInt(hh) < 1 && parseInt(hh) > 12){
             
         } else {
             return hh;
         }
-
-    
+  
 }
 
 //takes in a string assumed to be two digits or less
@@ -171,9 +170,40 @@ function appendZeros(count, num){
     return num;
 }
 
+/* AutoComplete */
 
+function autoComplete(){
+    
+}
 
+function reloadHours(){
+    
+}
 
+/* Animation */
 
+function swapText( e, textToReplace, milliseconds ){
+    
+    e.animate( {'opacity': 0 }, milliseconds, function() {
+        $(this).text(textToReplace)
+    }).animate({'opacity': 1}, milliseconds);
+    
+}
 
-         
+function fadeOut( e, milliseconds) {
+    e.animate( {'opacity': 0}, milliseconds, function() {
+        $(this).css('display', 'none')
+    });
+}
+
+function fadeIn( e, milliseconds) {
+//    var el = document.getElementById(e);
+    
+//    e.style.opacity = 0
+    e.css({'opacity' : 0})
+      e.css('display', 'block')
+    
+    e.animate( {'opacity': 1}, milliseconds, function() {
+        $(this).css('display', 'block')
+    });
+}

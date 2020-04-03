@@ -3,9 +3,23 @@
 *** Patches ***
 - Signature can now be drawn on touch screen devices.
 - Stopped page from allowing scroll during a modal popup.
+- Fixed the complete button for mobile displays. Clicking complete didn't work on smaller screens
 
 *** Updates ***
 - The date container header has an updated look with new icons.
 - Tabbing order starts with goBack and Previous buttons, then time inputs from top to bottom, left to right, and finally the generate button.
 - Main page is responsive to different window sizes.
 - Popup modal for name input and signature are responsive to different window sizes and stable down to iPhone 6/7/8 sizes
+
+1.2 Release Notes
+*** Patches ***
+- Fixed time input check. Inputs that are not in 12 hour format will trigger red input box
+
+*** Updates ***
+- Improved visual appearance of the website including new interactive responses.
+- Turned off autocomplete for all inputs.
+- Removed browser outline for inputs and buttons.
+- Normalized css for most modern browsers.
+- Popup modal has new animations to make interactions more immersive.
+- Text turns red when it is an incorrect input.
+- Name input in the modal has new animations!
