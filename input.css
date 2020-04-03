@@ -3,6 +3,10 @@ green:  #7cba3f;
 purple: #8600b7;
 light-purple: #f6f1fd;
 
+colors for input box
+text box: #f2f2f2;
+text input: #292929;
+
 */
 html {
     background-color: #FFF;
@@ -68,8 +72,20 @@ body {
 */
 }
 
+.unselectable {
+    user-select: none;
+}
+
+.unclickable {
+    pointer-events: none;
+}
+
 .red-border {
     box-shadow: 0 0 0 1pt red !important;
+}
+
+.red-text {
+    color: red;
 }
 
 .vertical-center {
@@ -111,12 +127,11 @@ input {
     border-radius: 3px;
     border: .5px solid #d4d4d4;
     background-color: #f7f7f7;
-    
 }
 
 .input:focus {
     outline: none;
-    box-shadow: 0 0 0 .5pt #8600b7;
+    border: .5px solid #8600b7;
     background-color: #fff;
 
 }
@@ -129,7 +144,6 @@ input {
 .no-hover:hover {
     outline: none;
     box-shadow: none;
-    box-shadow: 0 0 0 .5pt #8600b7;
 }
 
 .input-box input[type="text"]{
@@ -144,27 +158,6 @@ button {
     cursor: pointer;
     outline: none;
 }
-
-/*
-.btn:link,
-.btn:visited {
-    color: #FFFFFF;
-    background-color: #7cba3f;
-    display: inline-block;
-    padding: 15px 30px;
-    font-weight: 400;
-    text-decoration: none;
-    border-radius: 7px;
-    transition: background-color 0.2s, border 0.2s, color 0.2s;
-}
-
-.btn:hover,
-.btn:active,
-.btn:focus{
-    outline: none;
-    background-color: #619131;
-}
-*/
 
 .btn {
     color: #FFFFFF;
@@ -184,6 +177,7 @@ button {
     outline: none;
     background-color: #619131;
 }
+
 
 /*SETUP*/
 .row {
@@ -413,6 +407,7 @@ nav img {
     width:100%;
     height: 100%;
 }
+
 .container-sign {
     width:100%;
     height: 100%;
@@ -423,7 +418,6 @@ nav img {
     position: absolute;
     bottom: 50px;
     width: 100%;
-    pointer-events: none;
 }
 .canvas-sign {
     display:inline;
@@ -449,7 +443,6 @@ nav img {
     text-align: center;
     transition: .1s ease-out;
 }
-
 
 .clear-btn {
 	background-color:#fff;
@@ -574,15 +567,17 @@ hr{
 #header-name {
     line-height: 50px;
     font-weight: 400;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 #nameInput{
     position: relative;
     text-align: center;
     top: 50%;
+    transform: translateY(-50%);
 }
 
+/*
 .name {
     height: 50px;
     width: 80%;
@@ -590,6 +585,19 @@ hr{
     text-align: center;
     font-size: 32px;
     border-bottom: 2px solid #8600b7;
+}
+*/
+
+.name {
+    height: 50px;
+    width: 80%;
+    border: none;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    color: #292929;
+    text-align: center;
+    font-size: 32px;
+/*    border-bottom: 2px solid #8600b7;*/
 }
 
 /*
@@ -599,6 +607,4 @@ hr{
 }
 */
 
-.width-closer {
-    
-}
+/* fancy animation */

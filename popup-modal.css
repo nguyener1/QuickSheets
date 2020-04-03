@@ -24,6 +24,11 @@
     width: 600px;
     
 }
+
+.modal-content-small {
+    height: 150px;
+}
+
 .modal-content {
 
     height: 300px;
@@ -35,7 +40,6 @@
 }
 
 .modal-footer {
-
     height: 60px;
 }
 
@@ -65,24 +69,15 @@
 .modal-show.effect .modal-body{
     transform: translateY(0);
 }
-/*
-.modal-show.effect .modal-body,
-.modal-show.effect.popup-modal {
-    opacity: 1;
-    animation: fadeIn 0.3s;
+
+.effect-2 {
+    transition: height .3s;
 }
 
-.effect .modal-body {
-    
+.expand.modal-content {
+    height: 300px;
 }
 
-@keyframes fadeIn {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+.collapsed.modal-content {
+    height: 150px;
 }
-*/
-

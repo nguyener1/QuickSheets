@@ -17,7 +17,8 @@ function isTime(str){
         //console.log('is null');
         return false;
     }
-    if (count(str, ':') >=2){
+
+    if (count(str, ':') >= 2){
         //console.log('too many colons');
         return false;
     }
@@ -42,7 +43,6 @@ function autoCompleteTime(str){
         return str;
     }
     
-        
     var a = count(str,':');
     var hh,mm;
     switch (a){
@@ -181,4 +181,30 @@ function reloadHours(){
     
 }
 
-         
+/* Animation */
+
+function swapText( e, textToReplace, milliseconds ){
+    
+    e.animate( {'opacity': 0 }, milliseconds, function() {
+        $(this).text(textToReplace)
+    }).animate({'opacity': 1}, milliseconds);
+    
+}
+
+function fadeOut( e, milliseconds) {
+    e.animate( {'opacity': 0}, milliseconds, function() {
+        $(this).css('display', 'none')
+    });
+}
+
+function fadeIn( e, milliseconds) {
+//    var el = document.getElementById(e);
+    
+//    e.style.opacity = 0
+    e.css({'opacity' : 0})
+      e.css('display', 'block')
+    
+    e.animate( {'opacity': 1}, milliseconds, function() {
+        $(this).css('display', 'block')
+    });
+}

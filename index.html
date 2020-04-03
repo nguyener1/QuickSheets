@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="slider_v1.2.css">
         <link rel="stylesheet" href="popup-modal.css">
         <link rel="stylesheet" href="queries.css">
+        <link rel="stylesheet" href="vendor/css/normalize.css">
+        <link rel="stylesheet" href="vendor/css/hoshi.css">
         <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
         <script src="resources/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -172,11 +174,12 @@
     <script>
 
         var startMon, endSun, currentMon, currentSun;
-        var canvas, container;
+        var canvas, canvasWidth, canvasHeight;
         var media350 = window.matchMedia("only screen and (max-width: 350px)");
         var media500 = window.matchMedia("only screen and (max-width: 500px)");
         
         $(document).ready(function() {
+            
             initWeekRange();
             fillWeekHeader( startMon, endSun );
             currentMon = new Date( startMon.getTime() );
@@ -184,16 +187,42 @@
             autofillDate( currentMon, currentSun );
             
             canvas = $('#canvas');
-            container = $(canvas).parent();
             
-            $(window).resize( responsiveCanvas );
-            //$(window).resize( fillWeekHeader( currentMon, currentSun ) );
+            $(window).resize( responsiveCanvas );  
+            initEventListeners();
             
         });
         
+        function initEventListeners(){
+            
+            //BEGIN hoshi input listeners
+            
+            var e = document.getElementById('textInput');
+
+            e.addEventListener('focus', function () {
+                $('.input-hoshi').addClass('input-filled');
+            });
+
+            e.addEventListener('blur', function () {
+                if ( e.value == '') {
+                    $('.input-hoshi').removeClass('input-filled');
+                } 
+            });
+            
+            //END hoshi input listeners
+        }
         function responsiveCanvas(){
-            canvas.attr('width', $(container).width() ); 
-            canvas.attr('height', $(container).height() );
+        
+            container = $(canvas).parent();
+            //FIXMEE
+            if (container.height() == canvasHeight && 
+                container.width() == canvasWidth){
+                return
+            }
+            
+            canvas.attr('width', $(container).width() );
+            canvas.attr('height', '300px');
+//            canvas.attr('height', $(container).height() );
         }
         
         function refreshCard(left){
@@ -321,8 +350,6 @@
             }
         }
         
-        
-        
         function getListOfDates(startDate, endDate) {
             
             var list = [startDate];
@@ -358,23 +385,47 @@
             var newStr = '';
             
             el.removeClass('no-hover')
-            if( str == '' ){
+
+            if ( str == '' ){
                 el.removeClass("red-border");
+                el.removeClass("red-text");
                 return;
             }
             
-            if(isTime(str) == false){
+            if (isTime(str) == false){
                 el.addClass("red-border");
+                el.addClass("red-text")
                 return;
             }
             
-            if(el.hasClass("red-border")){
+            if (el.hasClass("red-border")){
                 el.removeClass("red-border");
+            }
+            
+            if (el.hasClass("red-text")){
+                el.removeClass("red-text")
             }
             
             newStr = autoCompleteTime(str);
             
             $(e).val(newStr);
+            
+            var hh = getHourSide(newStr);
+            var mm = getMinSide(newStr);
+            
+            //hour has to be in 12 hour format
+            if ( hh < 1 || hh > 12 ){
+                el.addClass("red-border");
+                el.addClass("red-text");
+                return;
+            }
+            
+            if (mm < 0 || mm > 59) {
+                el.addClass("red-border");
+                el.addClass("red-text");
+                return; 
+            }
+            
         }
         
         //changes time into "HH:MM" 24 hour time 
@@ -407,7 +458,7 @@
         function modalClickEvents(e) {
             if (e == 'open') {
                 openModal();
-                enterNameSetup();
+                enterNameSetup(true);
             }
             else if (e == 'close') {
                 closeModal();
@@ -432,11 +483,17 @@
         }
         
         function closeModal(){
-
-            $('body').removeClass('no-scroll');
+            
+            $('#modal-content').removeClass('expand');
             $('.popup-modal').removeClass('modal-show');
             
+            setTimeout(function() {
+                $('#modal-content').addClass('collapsed');
+            }, 500);
+            
+            $('body').removeClass('no-scroll');
         }
+        
         function goBack(){
             var header = $('#header-name').text();
             
@@ -447,11 +504,13 @@
                 enterNameSetup();
             }
         }
+        
         function continuePressed(){
+            
             var text = $('#header-name').text()
+            
             if (text == 'Enter Your Name') {
-                enterSignatureSetup()
-                responsiveCanvas();
+                enterSignatureSetup();
             }
             if (text == 'Sign') {
                 packageData();
@@ -470,41 +529,59 @@
             }
         }
         
-        function clearCanvas() {
-            var $canvas = $('#canvas');
-            var ctx = $canvas[0].getContext('2d');
-            c_width = $canvas.width();
-            c_height = $canvas.height();
-            ctx.clearRect(0, 0, c_width, c_height);
-        };
-        
         //displays input for name
-        function enterNameSetup() {
-            $('#header-name').text('Enter Your Name');
-            $('.modal-content').find('#signature').css('display', 'none');
-            $('.popup-modal').find('#nameInput').css('display', 'block');
+
+        function enterNameSetup(modalWasOpened) {
+            
+            var header  = $('#header-name'),
+                content = $('#modal-content');
+            
+            if (modalWasOpened) {
+                header.text('Enter Your Name')
+            }
+            else {
+                swapText( header, 'Enter Your Name', 200);
+            }
+                    
+            content.removeClass('expand');
+            content.addClass('collapsed');
+            
+            swapContent('#signature','#nameInput')
+            
         }
         
         //displays canvas for signing
         function enterSignatureSetup(){
             
-            $('#header-name').text('Sign');
-            $('.popup-modal').find('#nameInput').css('display', 'none');
-            $('.modal-content').find('#signature').css('display', 'block');
+            var header  = $('#header-name'),
+                content = $('#modal-content');
+
+            swapText( header, 'Sign', 200);
             
-            if (media.matches){
+            content.removeClass('collapsed');
+            content.addClass('expand');
+            swapContent('#nameInput','#signature');
+            
+            if (canvasWidth == undefined || 
+                canvasHeight == undefined ||
+                canvasWidth != getCanvasWidth('#signature') ||
+                canvasHeight != getCanvasHeight('#signature') ){
                 
-                //screen in landscape mode
-                if ( screen.width > screen.height ){
-                    //$('.modal-body').addClass('rotate-right');
-                }
-
-                //screen in portait mode
-                if ( screen.width < screen.height ){
-
-                }
+                setTimeout( function() {
+                    
+                    responsiveCanvas();
                 
+                }, 300)
+                
+                canvasWidth = getCanvasWidth('.container-sign')
+                canvasHeight = getCanvasHeight('.container-sign')
             }
+        }
+        
+        function swapContent(e1, e2){
+            $(e1).fadeOut(200).promise().then( function() {
+                $(e2).fadeIn(200);
+            });
         }
         
     </script>
@@ -519,6 +596,16 @@
             var e = $();
             return e.offsetHeight;
         }
+        
+        function getCanvasWidth(canvasId) {
+            var e = $(canvasId)
+            return canvas.width()
+        }
+        
+        function getCanvasHeight(canvasId){
+            var e = $(canvasId)
+            return  e.height()
+        }
     </script>
     </head>
     
@@ -527,30 +614,12 @@
         <nav class="text-center">
             <img src='resources/images/Logo.jpeg' alt="logo">
         </nav>
-        <!--<section>
-            <div class="row section-step-1">
-                
-                <h1>Step 1</h1>
-                <h2>Tell us your name</h2>
-                
-                <div>
-                    <input id="name" type="text" class="name" placeholder="Your name">   
-                </div>
-                
-            </div>
-            
-        </section>
-        <section>-->
         
         <div class="dim">
             <div class="container">
-<!--            <div class="row section-step-1">-->
-                
-                <!--<h1>Step 2</h1>
-                <h2>Log your hours</h2>-->
                 
                 <div class="date-container">
-<!--                    <div class="row">-->
+
                         <div class="switch-container float-left switch-item" id="left-button">
                             <button class="switch-icon switch-button" type="button" tabindex="1" id="go-back">
                             <img src="https://img.icons8.com/ios/30/8600b7/long-arrow-left.png">
@@ -1176,30 +1245,7 @@
         <section>
             
             <div class="row section-step-3">
-                
-<!--
-                <h1>Step 3</h1>
-                <h2>Sign Here</h2>
--->
-                
-<!--
-                <div class="container-sign">
-                    <canvas id="canvas" style="width:600px; height:300px;" width="600" height="300" class="canvas-sign"></canvas>       
-                    <script src="resources/js/signature-module.js"></script>
-                </div>
-                <div class="container-clear">
-                    <input type="button" value="Clear" class="canvas-clear" />
-                    <script>
-                        $('.canvas-clear').on('click', function(e) {
-                            var $canvas = $('#canvas');
-                            var ctx = $canvas[0].getContext('2d');
-                            c_width = $canvas.width();
-                            c_height = $canvas.height();
-                            ctx.clearRect(0, 0, c_width, c_height);
-                            });
-                    </script>
-                </div>
--->
+
             </div>
         
         </section>
@@ -1207,18 +1253,11 @@
         <section>
             
             <div class="row section-step-4">
-<!--
-                <h1>Step 4</h1>
-                <h2>Click generate to make your timesheet</h2>
--->             <button type="button" class="btn" id="btn-generate" tabindex="3"
+
+                <button type="button" class="btn" id="btn-generate" tabindex="3"
                         onclick="modalClickEvents('open')">
                     GENERATE
                 </button>
-<!--
-                <p>
-                    <a class="btn" id="btn-generate" tabindex="3" href="#" onclick="modalClickEvents('open')">GENERATE</a>
-                </p>
--->
             </div>
             
         </section>
@@ -1243,10 +1282,15 @@
                         </div>
 <!--                    </div>-->
                 </div>
-                <div id="modal-content" class="modal-content">
+                <div id="modal-content" class="modal-content collapsed effect-2">
                     <!-- Name -->
-                    <div id="nameInput">
-                        <input id="name" type="text" class="name" placeholder="Your name" autocomplete="off">   
+
+                    <div id="nameInput" class="hoshi-container">
+                        <span class="input-hoshi">
+                            <input class="input_field input_field-hoshi" id="textInput" type="text">
+                            <label class="input_label input_label-hoshi">
+                            </label>
+                        </span>
                     </div>
                     <!-- Signature -->
                     <div id="signature">
@@ -1254,7 +1298,7 @@
                             <canvas id="canvas" style="width:100%; height:100%;"></canvas>
                             <script src="resources/js/signature-module.js"></script>
                         </div>
-                        <div class="container-sign-line">
+                        <div class="container-sign-line unclickable unselectable">
                             <hr>
                             <span class="position-x">X</span>
                         </div>

@@ -1,0 +1,149 @@
+/*
+$(document).ready( function () {
+
+    var e = document.getElementById('nameInput');
+
+    e.addEventListener('focus', function () {
+        $('.input-hoshi').addClass('input-filled');
+        console.log('in focus');
+    });
+
+    e.addEventListener('blur', function () {
+        if ( e.value == '') {
+            console.log('on blur')  
+            $('.input-hoshi').removeClass('input-filled');
+        } 
+    });
+})
+*/
+
+.hoshi-container {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.input-container {
+    display: inline-block;
+    height: 100px;
+    width: 350px;
+}
+
+.input-hoshi {
+    overflow: hidden;
+}
+
+.input-hoshi {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin: 1em;
+    max-width: 350px;
+    width: calc(100% - 2em);
+    height: 100px;
+    vertical-align: top;
+    font-size: 100%;
+}
+
+.input_field {
+    text-align: center;
+    position: relative;
+    display: block;
+    float: right;
+    height: 100%;
+    width: 100%;
+    font-size: 150%;
+    color: #5d5d5d;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.input_field:focus {
+    outline: none;
+}
+
+.input_field-hoshi { 
+    margin-top: 10px;
+    background: transparent;
+}
+
+.input_label {
+    display: inline-block;
+    float: right;
+    padding: 0.1em; /*overrided by hoshi class version*/
+    width: 40%; /*overrided by hoshi class version*/
+    color: #6a7989;
+    font-weight: bold;
+    font-size: 70.25%;
+    user-select: none;
+    font-family: 'Raleway', Arial, sans-serif;
+}
+
+.input_label-hoshi {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0 0.25em;
+    width: calc(100% - .50em);
+    height: calc(100% - 1em);
+    text-align: left;
+    pointer-events: none;
+}
+
+.input_label-hoshi::before,
+.input_label-hoshi::after {
+    content: '';
+    margin-top: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 10px);
+    border-bottom: 1px solid #B9C1CA;
+}
+
+.input_label-hoshi::after {
+    margin-top: 4px;
+    border-bottom: 2px solid #c21bff;
+    transform: translate3d(-100%,0,0);
+    transition: 0.3s;
+}
+
+.input_field-hoshi:focus + .input_label-hoshi::after,
+.input-filled .input_label-hoshi:after {
+    transform: translate3d(0,0,0);
+}
+
+.input_label-content {
+    margin-top: 1em;
+    display: block;
+    /*padding will depend*/
+    padding: 1.6em 0;
+    width: 100%;
+}
+
+.input_field-hoshi + .input_label-hoshi .input_label-content-hoshi {
+    position: absolute;             
+}
+
+.input_field-hoshi:focus + .input_label-hoshi .input_label-content-hoshi,
+.input-filled .input_label-content-hoshi {
+    animation: anim-1 0.3s forwards;
+}
+
+@keyframes anim-1 {
+    50% {
+        opacity: 0;
+        transform: translate3d(1em, 0, 0);
+    }
+    51% {
+        opacity: 0;
+        transform: translate3d(-1em, -40%, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, -40%, 0);
+    }
+}
