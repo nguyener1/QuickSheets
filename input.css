@@ -13,6 +13,7 @@ html {
     font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
     color: #3d4138;
+    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
 }
 
 h1, h2 {
@@ -72,6 +73,10 @@ body {
 */
 }
 
+.disable-dbl-tap-zoom {
+    touch-action: manipulation;
+}
+
 .unselectable {
     user-select: none;
 }
@@ -116,6 +121,7 @@ body {
 }
 
 input {
+    -webkit-appearance: none;
     caret-color: #8600b7;
     outline: none;
 }
@@ -160,6 +166,7 @@ button {
 }
 
 .btn {
+    border: none;
     color: #FFFFFF;
     background-color: #7cba3f;
     display: inline-block;
