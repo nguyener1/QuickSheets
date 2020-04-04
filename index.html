@@ -197,7 +197,7 @@
             
             //BEGIN hoshi input listeners
             
-            var e = document.getElementById('textInput');
+            var e = document.getElementById('name');
 
             e.addEventListener('focus', function () {
                 $('.input-hoshi').addClass('input-filled');
@@ -534,7 +534,12 @@
         function enterNameSetup(modalWasOpened) {
             
             var header  = $('#header-name'),
-                content = $('#modal-content');
+                content = $('#modal-content'),
+                input   = document.getElementById('name');
+            
+            if (input.value != ''){
+                $('.input-hoshi').addClass('input-filled');
+            }
             
             if (modalWasOpened) {
                 header.text('Enter Your Name')
@@ -562,20 +567,22 @@
             content.addClass('expand');
             swapContent('#nameInput','#signature');
             
-            if (canvasWidth == undefined || 
-                canvasHeight == undefined ||
-                canvasWidth != getCanvasWidth('#signature') ||
-                canvasHeight != getCanvasHeight('#signature') ){
+            setTimeout( function() {
+                    
+                if (canvasWidth == undefined || 
+                    canvasHeight == undefined ||
+                    canvasWidth != getCanvasWidth('.container-sign') ||
+                    canvasHeight != getCanvasHeight('.container-sign') ){
                 
-                setTimeout( function() {
                     
                     responsiveCanvas();
+                    
+                    canvasWidth = getCanvasWidth('.container-sign')
+                    canvasHeight = getCanvasHeight('.container-sign')
+                }
                 
-                }, 300)
-                
-                canvasWidth = getCanvasWidth('.container-sign')
-                canvasHeight = getCanvasHeight('.container-sign')
-            }
+            }, 500)
+
         }
         
         function swapContent(e1, e2){
@@ -1287,7 +1294,7 @@
 
                     <div id="nameInput" class="hoshi-container">
                         <span class="input-hoshi">
-                            <input class="input_field input_field-hoshi" id="textInput" type="text">
+                            <input class="input_field input_field-hoshi" id="name" type="text">
                             <label class="input_label input_label-hoshi">
                             </label>
                         </span>
