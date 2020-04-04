@@ -14,6 +14,7 @@
 1.2 Release Notes
 *** Patches ***
 - Fixed time input check. Inputs that are not in 12 hour format will trigger red input box
+- Safari Mobile compatibility updates: turned off default looks and actions (double tap zoom, input box defaults).
 
 *** Updates ***
 - Improved visual appearance of the website including new interactive responses.
