@@ -441,10 +441,15 @@
             hh = getHourSide(time);
             mm = getMinSide(time);
             
-            if (PM){
-                 hh = (parseInt(hh) + 12).toString();
+            //if it is PM add 12 hours
+            if (PM && hh != 12){
+                hh = (parseInt(hh) + 12).toString();
+            }
+            else if (!PM && hh == 12){
+                hh = '00';
             }
             
+            //make HH 2 digits long
             if (hh.length == 1){
                 hh = '0' + hh;
             }
