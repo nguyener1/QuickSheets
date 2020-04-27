@@ -15,18 +15,8 @@
         <script>
             
             $(document).ready( function () {
-                  $('#downloadBtn').click( SaveAsPNG );
+                  $('#downloadBtn').click( SaveAsJpeg );
             });
-            
-            function SaveAsPNG() {
-                 
-                domtoimage.toBlob(document.getElementById('TimeSheet'))
-                    .then(function (blob) {
-                        window.saveAs(blob, 'timesheet.png');
-                        console.log('download complete')
-                    });
-                
-            }
             
             var Week1 = [ 
                 ['mon-date-1', 'mon-start-1', 'mon-end-1'],
@@ -378,12 +368,25 @@
         <!-- Dom to Image feature -->
         <script>
             
-            function SaveAsPNG() {
-                 
-                domtoimage.toBlob(document.getElementById('TimeSheet'))
-                    .then(function (blob) {
-                        window.saveAs(blob, 'timesheet.png');
-                        console.log('download complete')
+            //old
+//            function SaveAsPNG() {
+//                 
+//                domtoimage.toBlob(document.getElementById('TimeSheet'))
+//                    .then(function (blob) {
+//                        window.saveAs(blob, 'timesheet.png');
+//                        console.log('download complete')
+//                    });
+//                
+//            }
+            
+            function SaveAsJpeg() {
+                
+                domtoimage.toJpeg(document.getElementById('TimeSheet'), { quality: 0.95 })
+                    .then(function (dataUrl) {
+                        var link = document.createElement('a');
+                        link.download = 'timesheet.jpeg';
+                        link.href = dataUrl;
+                        link.click();
                     });
                 
             }
