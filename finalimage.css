@@ -111,7 +111,7 @@ td {
     background-color: #333333;
 }
 
-#downloadBtnn {
+#downloadBtn {
     position: fixed;
     bottom: 20px;
     box-shadow: 0 10px 8px rgba(0,0,0, 0.15), 5px 0 8px rgba(0,0,0,0.15), -5px 0 8px rgba(0,0,0,0.15);
