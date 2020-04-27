@@ -1,0 +1,39 @@
+@media only screen and (max-width: 1023px) {
+    
+    #downloadBtn {
+        padding: 30px;
+        border-radius: 50%;
+        bottom: 50px;
+        right: 50px;
+    }
+    #downloadBtn span {
+        display: none;
+    }
+    
+   .icon-download {
+        width: 50px;
+        height: 50px;
+    }
+
+}
+
+/* this is not working properly until the metadata for viewport has been set*/
+/* Small phones to small tablets: from 481px to 767px */
+@media only screen and (max-width: 767px) {
+    
+    #downloadBtn {
+        padding: 30px;
+        border-radius: 50%;
+        bottom: 50px;
+        right: 50px;
+    }
+    #downloadBtn span {
+        display: none;
+    }
+    
+   .icon-download {
+        width: 50px;
+        height: 50px;
+    }
+    
+}

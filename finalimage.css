@@ -118,4 +118,10 @@ td {
     right: 30px;
     z-index: 99;
     cursor: pointer;
+
+}
+
+.icon-download {
+    width: 16px;
+    height: 16px;
 }
