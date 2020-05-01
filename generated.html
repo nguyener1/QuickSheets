@@ -368,26 +368,25 @@
             }
             
             //domtoimage is async process so use promise/then/await
-            function makePng(){
+            function makeJpeg(){
                 
                 var node = document.getElementById('TimeSheet');
                 
-                domtoimage.toPng(node)
+                domtoimage.toJpeg(node, { quality: 1 })
                     .then(function (dataUrl) {
-//                        var img = new Image();
-//                        img.src = dataUrl;
-//                        document.body.appendChild(img);
+                        var img = new Image();
+                        img.src = dataUrl;
+                        document.body.appendChild(img);
                         
-                    var start = $('#from_date').text();
-                    var end = $('#to_date').text();
+                        var start = $('#from_date').text();
+                        var end = $('#to_date').text();
                     
                         //create download link
                         var link = document.getElementById('download-link')
-                        link.download = 'timesheet_' + start + '-' + end + '.png';
+                        link.download = 'timesheet_' + start + '-' + end + '.jpeg';
                         link.href = dataUrl;
                         
-                        //hide original
-//                        $('#TimeSheet').hide();
+                        $('#TimeSheet').hide();
                     })
                     .catch(function (error) {
                         console.error('oops, something went wrong!', error);
@@ -401,7 +400,7 @@
                 fillName();
                 fillInfo();
                 fillCanvas();
-                makePng();
+                makeJpeg();
                 
             }
             

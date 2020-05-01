@@ -29,4 +29,4 @@
 1.3 Release Notes
 
 *** Updates ***
-- New option to download your timesheet as png!
+- New option to download your timesheet as jpeg!
