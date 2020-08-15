@@ -31,6 +31,86 @@ function isTime(str){
     
 }
 
+function sumOfHoursAsMin( list ){
+
+    var sum = 0;
+
+    for (var i = 0; i < list.length; i++){
+
+        var hourMin;
+
+        var time = list[i];
+
+        hourMin = parseTime(time);
+        sum += ( parseInt( hourMin[0] ) * 60 ) + parseInt(hourMin[1]);
+
+    }
+
+    return sum;
+}
+
+function parseTime( time ){
+    var hh = '', mm = '', i = 0;
+
+    while (time[i] != ':'){
+        hh += time.charAt(i);
+        i++;
+    }
+
+    i++;
+
+    while (i <= time.length){
+        mm += time.charAt(i);
+        i++;
+    }
+
+    return [hh,mm];
+}
+
+function convertTo12Hour( time ){
+                
+    var PM, hh, hour;
+    PM = true;
+    hh = time.charAt(0) + time.charAt(1);
+    hour = parseInt(hh);
+
+    if (hour == 24 || hour == 0) {
+        hour = 12;
+        PM = false;
+    } else if (hour > 12) {
+        hour = hour % 12;
+    } else if (hour < 12) {
+        PM = false;
+    }
+
+    time = hour.toString(10) + ':' + time.substring(3,5);
+
+    if (PM) {
+        time += ' PM';
+    } else {
+        time += ' AM';
+    }
+
+    return time;
+}
+
+function getNumericalMeridianTime( time ) {
+    
+    var hh, hour;
+    hh = time.charAt(0) + time.charAt(1);
+    hour = parseInt(hh);
+
+    if (hour == 24 || hour == 0) {
+        hour = 12;
+    } else if (hour > 12) {
+        hour = hour % 12;
+    }
+
+    time = hour.toString(10) + ':' + time.substring(3,5);
+    
+    return time;
+}
+            
 function autoCompleteTime(str){
     
     if (str == null){
