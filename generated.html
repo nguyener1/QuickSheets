@@ -106,40 +106,40 @@
                 return mm + '/' + dd;
             }
             
-            function fillHours( weekNum, weekId ){
-                
-                for (var i = 0; i < weekNum.length; i++){
-            
-                    //retrieve values from localstorage by key and set it to element with same id
-                    var start = localStorage.getItem(weekNum[i][1]),
-                        end = localStorage.getItem(weekNum[i][2]),
-                        elapsedTime = '',
-                        timeIn, timeOut;
-                    
-                    console.log(date);
-                    console.log('start: ' + start + ' |End: ' + end);
-                    if ( start != false) { //change start time  
-                        timeIn = convertTo12Hour(start);
-                        changeData( i, 1, timeIn, weekId );
-                    } 
-                    if ( end != false) {   //change end time
-                        timeOut = convertTo12Hour(end);
-                        changeData( i, 2, timeOut, weekId );
-                    }
-                    if ( start != false && end != false ){ //change total hours
-                        elapsedTime = getElapsedTime( start, end );
-                        changeData( i, 3, elapsedTime, weekId );
-                    }
-                }
-            }
+//            function fillHours( weekNum, weekId ){
+//                
+//                for (var i = 0; i < weekNum.length; i++){
+//            
+//                    //retrieve values from localstorage by key and set it to element with same id
+//                    var start = localStorage.getItem(weekNum[i][1]),
+//                        end = localStorage.getItem(weekNum[i][2]),
+//                        elapsedTime = '',
+//                        timeIn, timeOut;
+//                    
+//                    console.log(date);
+//                    console.log('start: ' + start + ' |End: ' + end);
+//                    if ( start != false) { //change start time  
+//                        timeIn = convertTo12Hour(start);
+//                        changeData( i, 1, timeIn, weekId );
+//                    } 
+//                    if ( end != false) {   //change end time
+//                        timeOut = convertTo12Hour(end);
+//                        changeData( i, 2, timeOut, weekId );
+//                    }
+//                    if ( start != false && end != false ){ //change total hours
+//                        elapsedTime = getElapsedTime( start, end );
+//                        changeData( i, 3, elapsedTime, weekId );
+//                    }
+//                }
+//            }
             
             function fillWeek( weekNum, weekId ){
                 
                 for (var i = 0; i < weekNum.length; i++){
             
-                    //retrieve values from localstorace by key and set it to element with same id
+                    //retrieve values from localstorage by key and set it to element with same id
                     var 
-                        start = localStorage.getItem(weekNum[i][1]),
+                      start = localStorage.getItem(weekNum[i][1]),
                         end = localStorage.getItem(weekNum[i][2]),
                         elapsedTime = '',
                         timeIn, timeOut,
@@ -164,7 +164,6 @@
                     }
                 }
             }
-            
             
             
             //may need to add a check so that end time is always after start time

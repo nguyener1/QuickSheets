@@ -180,6 +180,22 @@
                 
                 return timeString;
             }
+            
+            function loadClickable() {
+                
+                var item
+                //check if previous timesheet data is available
+                start_ids.forEach( e => {
+                    item = localStorage.getItem(e);
+                    
+                    if (item != null && item != ''){
+                        document.getElementById('prevTimesheet').style.display = 'block';
+                        return;
+                    }
+                });
+                
+                return;
+            }
    
     </script>
     
@@ -190,6 +206,8 @@
         var media350 = window.matchMedia("only screen and (max-width: 350px)");
         var media500 = window.matchMedia("only screen and (max-width: 500px)");
         
+        
+        
         $(document).ready(function() {
             
             initWeekRange();
@@ -199,6 +217,8 @@
             autofillDate( currentMon, currentSun );
             
             canvas = $('#canvas');
+            
+            loadClickable();
             
             $(window).resize( responsiveCanvas );  
             initEventListeners();
@@ -233,6 +253,7 @@
 //                img.src = data;
 //            
 //        }
+        
         
         function useLastTimesheet(){
             
@@ -749,7 +770,7 @@
                 
                 <div id="timeSheet">
                 
-                <div id="prevTimesheet">
+                <div id="prevTimesheet" style="display:none">
                    <a class="link" href="#" onclick="useLastTimesheet()">Use Previous Timesheet</a> 
                 </div>
                 
